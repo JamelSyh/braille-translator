@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/braille-translator/static/css/main.7fecbaa6.css",
+    "main.js": "/braille-translator/static/js/main.023f4d50.js",
+    "static/media/en-US.svg": "/braille-translator/static/media/en-US.111221a9d417d80be386af11b6af5a9c.svg",
+    "static/media/global.svg": "/braille-translator/static/media/global.99d70d9fe5e4113ba51c3782c16020d2.svg",
+    "static/media/braille.svg": "/braille-translator/static/media/braille.d91dbb5188876fd33f31327b71730f78.svg",
+    "static/media/logo.svg": "/braille-translator/static/media/logo.181dbf7fb92f69f909a7fb1525a83bb0.svg",
+    "static/media/fr-FR.svg": "/braille-translator/static/media/fr-FR.6995812b5740891ef493bc92d2af0d7c.svg",
+    "index.html": "/braille-translator/index.html",
+    "static/media/ar-DZ.svg": "/braille-translator/static/media/ar-DZ.65b5c52e90060c1fe65951edb336ecb8.svg",
+    "main.7fecbaa6.css.map": "/braille-translator/static/css/main.7fecbaa6.css.map",
+    "main.023f4d50.js.map": "/braille-translator/static/js/main.023f4d50.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7fecbaa6.css",
+    "static/js/main.023f4d50.js"
+  ]
+}
