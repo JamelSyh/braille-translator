@@ -58,6 +58,41 @@ grades = [
     }
 ]
 
+input_translate = [
+    {
+        "name": "Arabic",
+        "native": "العربية",
+        "code": "ar",
+    },
+    {
+        "name": "English",
+        "native": "English",
+        "code": "en",
+    },
+    {
+        "name": "French",
+        "native": "Francais",
+        "code": "fr",
+    },
+]
+output_translate = [
+    {
+        "name": "Arabic",
+        "native": "العربية",
+        "code": "ar",
+    },
+    {
+        "name": "English",
+        "native": "English",
+        "code": "en",
+    },
+    {
+        "name": "French",
+        "native": "Francais",
+        "code": "fr",
+    },
+]
+
 
 def exists(code, options):
     return any(option["code"] == code for option in options)
@@ -98,6 +133,11 @@ async def download_file(braille: str):
     return response
 
 
-@app.get("/options")
-async def get_lang_list():
+@app.get("/Transcript_options")
+async def getTranscribeOptions():
     return {"languages": languages, "grades": grades}
+
+
+@app.get("/Translate_options")
+async def getTranslateOptions():
+    return {"languages": input_translate, "grades": output_translate}

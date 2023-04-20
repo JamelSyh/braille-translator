@@ -66,12 +66,18 @@ body.dark {
   border-radius: 20px;
   background-color: var(--light-bg-color);
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  -webkit-user-select: none;  /* Disable selection on Chrome, Safari, etc. */
+  -moz-user-select: none;     /* Disable selection on Firefox */
+  -ms-user-select: none;      /* Disable selection on Microsoft Edge */
+  user-select: none;  
+
 }
 .container .card .from,
 .container .card .to {
   display: flex;
   align-items: center;
   gap: 20px;
+
 }
 .container .card .from {
   margin-right: 20px;
@@ -361,6 +367,11 @@ nav {
   right: 0;
   z-index: 999;
   box-shadow: 0 0 10px 0 rgba(36, 44, 51, 0.2);
+  -webkit-user-select: none;  /* Disable selection on Chrome, Safari, etc. */
+  -moz-user-select: none;     /* Disable selection on Firefox */
+  -ms-user-select: none;      /* Disable selection on Microsoft Edge */
+  user-select: none;  
+
 }
 
 .logo {

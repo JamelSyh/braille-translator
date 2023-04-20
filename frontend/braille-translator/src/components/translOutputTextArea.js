@@ -1,3 +1,4 @@
+
 import { useSelector } from "react-redux/es/exports";
 import { useDispatch } from "react-redux/es/exports";
 import { outputText } from "../redux/actions";
@@ -5,7 +6,7 @@ import DropdownOut from './dropdownOut';
 import { DownloadOne, Copy } from "@icon-park/react";
 import '../App.css';
 
-function OutputTextArea({ options }) {
+function TranslOutputTextArea({ options }) {
 
 
   const dispatch = useDispatch();
@@ -44,6 +45,7 @@ function OutputTextArea({ options }) {
       <div className="to">
         <span className="heading">To :</span>
         <DropdownOut id="out" />
+        <DropdownOut id="out" />
       </ div>
       <textarea id="output-text" dir={inLang.code === 'ar' ? 'rtl' : ''} cols="30" rows="6" placeholder={placeholderHandler()} disabled value={outText ? outText : ""} onChange={event => dispatch(outputText(event.target.value))}></textarea>
       {outText &&
@@ -60,5 +62,5 @@ function OutputTextArea({ options }) {
   );
 }
 
-export default OutputTextArea;
+export default TranslOutputTextArea;
 

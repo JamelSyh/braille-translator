@@ -2,16 +2,14 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux/es/exports";
 import { useDispatch } from "react-redux/es/exports";
-import { useSpeechSynthesis } from 'react-speech-kit';
-import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import { Keyboard, UploadOne, Close, ViewGridCard, Voice, VolumeNotice, PauseOne } from "@icon-park/react";
 import { inputLang, inputText, keyboard, board, pending, outputLang } from "../redux/actions";
 import DropdownIn from './dropdownIn';
-import brailleToNum from "../constants/brailleToNum";
+import brailleToNum from '../constants/brailleToNum';
 import brailleKeys from "../constants/brailleKeys";
 import '../App.css';
 
-function InputTextArea() {
+function TranslInputTextArea() {
 
   const dispatch = useDispatch();
   const inText = useSelector(state => state.text.inputText);
@@ -27,33 +25,8 @@ function InputTextArea() {
   const [brailleMode, setBrailleMode] = useState(false);
   const [brailleInput, setBrailleInput] = useState("")
   const [key, setKey] = useState('');
-  const { speak, cancel, speaking, supported, voices } = useSpeechSynthesis();
-  const voiceList = {
-    'auto': voices[1],
-    'en': voices[1],
-    'fr': voices[6],
-  }
-  const speechList = {
-    'auto': '',
-    'en': 'en-US',
-    'fr': 'fr-FR',
-    'ar': 'ar-SA'
-  }
-  const { transcript, resetTranscript, listening } = useSpeechRecognition();
 
 
-  const handleStartRecognition = () => {
-    if (listening) {
-      SpeechRecognition.stopListening();
-    } else {
-      resetTranscript();
-      SpeechRecognition.startListening({ continuous: true, language: speechList[inLang.code] });
-    }
-  };
-
-  useEffect(() => {
-    dispatch(inputText(transcript));
-  }, [transcript, dispatch]);
 
   const handleClear = () => {
     dispatch(inputText(""));
@@ -84,17 +57,6 @@ function InputTextArea() {
       });
   };
 
-  const brailleKeys = {
-    'f': '1',
-    'd': '2',
-    's': '3',
-    'j': '4',
-    'k': '5',
-    'l': '6',
-    ' ': ' ',
-    'backspace': 'backspace',
-    'enter': 'enter'
-  }
   const handleKeyPress = (e) => {
     if (brailleMode) {
       if (outLang.code == "auto")
@@ -108,16 +70,6 @@ function InputTextArea() {
     }
   };
 
-  const handleSpeech = () => {
-    if (listening)
-      SpeechRecognition.stopListening();
-    if (inLang.code === "auto") {
-      dispatch(inputLang(inOpt[2]));
-    }
-    if (inText && !speaking && voiceList[inLang.code]) {
-      speak({ text: inText, voice: voiceList[inLang.code] });
-    }
-  }
 
   useEffect(() => {
     const len = brailleInput.length
@@ -165,6 +117,7 @@ function InputTextArea() {
       <div className="from">
         <span className="heading">From :</span>
         <DropdownIn id="in" />
+        <DropdownIn id="in" />
       </div>
       <div className="text-area">
         {inText !== "" && inLang.code !== "ar" && <div className="clear-btn" onClick={handleClear}> <Close theme="outline" size="23" strokeWidth={3} /></div>}
@@ -195,26 +148,9 @@ function InputTextArea() {
             <ViewGridCard size="30" strokeWidth={3} />
           </div>
         }
-
-        {!brailleMode &&
-          <>
-            {inText &&
-              < div className="icoon" onClick={handleSpeech}>
-                <VolumeNotice theme="outline" size="30" strokeWidth={3} />
-              </div>
-            }
-
-            < div className="icoon" onClick={handleStartRecognition} hidden={listening}>
-              <Voice theme="outline" size="30" strokeWidth={3} />
-            </div>
-            < div className="icoon" onClick={handleStartRecognition} hidden={!listening}>
-              <PauseOne theme="outline" size="30" strokeWidth={3} />
-            </div>
-          </>
-        }
       </div>
     </div >
   );
 }
 
-export default InputTextArea;
+export default TranslInputTextArea;

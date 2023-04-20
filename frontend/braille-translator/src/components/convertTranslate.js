@@ -5,8 +5,7 @@ import { useSelector } from "react-redux/es/hooks/useSelector";
 import { inputOptions, outputOptions, inputLang, outputText, pending } from "../redux/actions";
 
 
-function Convert() {
-
+function ConvertTranslate() {
 
   const dispatch = useDispatch();
   const inText = useSelector(state => state.text.inputText);
@@ -25,9 +24,10 @@ function Convert() {
     return () => { clearTimeout(timer); };
   }, [inText, inLang, dispatch]);
 
+
   useEffect(() => {
     const getOptions = async () => {
-      const { data } = await axios.get('http://localhost:8000/Transcript_options', {}, {
+      const { data } = await axios.get('http://localhost:8000/Translate_options', {}, {
       });
       if (data) {
         dispatch(inputOptions(data.languages));
@@ -39,30 +39,6 @@ function Convert() {
 
 
   useEffect(() => {
-    const doDetection = async () => {
-      try {
-        if (inLang.code === "auto" && debouncedText !== "") {
-          const { data } = await axios.post('https://translation.googleapis.com/language/translate/v2/detect', {}, {
-            params: {
-              q: debouncedText,
-              key: "AIzaSyCHUCmpR7cT_yDFHC98CZJy2LTms-IwDlM"
-            }
-          });
-          options.forEach((option) => {
-            if (option.code === data.data.detections[0][0].language) {
-              dispatch(inputLang(option));
-            }
-          });
-        }
-      } catch (e) {
-        dispatch(inputLang(options[2]));
-      }
-    }
-    doDetection();
-  }, [debouncedText, inLang, options, dispatch]);
-
-  useEffect(() => {
-
     const Transcoding = async () => {
       const { data } = await axios.post('http://localhost:8000/transcriptor', {}, {
         params: {
@@ -84,4 +60,4 @@ function Convert() {
   }, [debouncedText, inLang, outLang, dispatch]);
 }
 
-export default Convert;
+export default ConvertTranslate;
