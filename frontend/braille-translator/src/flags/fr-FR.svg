@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="180px" height="180px" viewBox="0 0 180 180" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61 (89581) - https://sketch.com -->
+    <title>Overrides/Languages/fr-FR</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <circle id="path-1" cx="90" cy="90" r="90"></circle>
+    </defs>
+    <g id="Overrides/Languages/fr-FR" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="fr-FR">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#D62626" xlink:href="#path-1"></use>
+            <g id="Shapes" mask="url(#mask-2)">
+                <rect id="Rectangle-path" fill="#FFFFFF" x="0" y="0" width="120" height="180"></rect>
+                <g id="Overrides/Options/Outlines/fr-FR" stroke="#002395" stroke-width="3">
+                    <circle id="Outline" cx="90" cy="90" r="88.5"></circle>
+                </g>
+                <rect id="Rectangle-path" fill="#002395" x="0" y="0" width="60" height="180"></rect>
+                <rect id="Rectangle-path" fill="#ED2939" x="120" y="0" width="60" height="180"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,30 @@
+The API can be accessed at `http://localhost:8000`.
+
+### Endpoints
+- `/transcriptor`: POST endpoint that accepts a JSON payload with the following parameters:
+    - `text`: the text to be transcribed
+    - `source`: the language or Braille grade of the source text. Must be one of the options listed in the `/options` endpoint.
+    - `target`: the language or Braille grade of the target text. Must be one of the options listed in the `/options` endpoint.
+    
+    The endpoint returns a JSON payload with the following format:
+    ```
+    {"result": "<transcribed text>"}
+    ```
+    
+- `/uploadfile`: POST endpoint that accepts a file upload with an image of text. The image is converted to text using pytesseract before being transcribed to Braille. The endpoint returns a JSON payload with the following format:
+    ```
+    {"text": "<text from image>", "result": "<transcribed text>"}
+    ```
+
+- `/downloadfile`: GET endpoint that downloads a file with the transcribed Braille text. Accepts a query parameter with the following format:
+    ```
+    /downloadfile/?braille=<transcribed text>
+    ```
+
+- `/options`: GET endpoint that returns a JSON payload with the available options for the `source` and `target` parameters in the `/transcriptor` endpoint, as well as the available Braille grades. The payload has the following format:
+    ```
+    {"languages": [<list of language options>], "grades": [<list of Braille grade options>]}
+    ```
+    
+## Acknowledgements
+This API is built with FastAPI and pytesseract. The Braille transcriptor is based on the [braille-transcriptor](https://github.com/VicenteBRL/braille-transcriptor) package.
