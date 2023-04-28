@@ -1,5 +1,5 @@
-import { dropdownToggleIn, inputLang } from "../redux/actions";
-import { useSelector } from "react-redux/es/exports";
+import { inputLang, outputLang, inputTransLang, outputTransLang } from "../redux/actions";
+import { useState } from 'react';
 import { useDispatch } from "react-redux/es/exports";
 import enFlag from "../flags/en-US.svg"
 import arFlag from "../flags/ar-DZ.svg"
@@ -8,12 +8,12 @@ import autoFlag from "../flags/global.svg"
 import brailleFlag from "../flags/braille.svg"
 import '../App.css';
 
-function DropdownIn() {
+function Dropdown({ id, opt, lang }) {
+
+  const [isActive, setActive] = useState(false);
 
   const dispatch = useDispatch();
-  const isActiveIn = useSelector(state => state.dropdown.in);
-  const inLang = useSelector(state => state.language.inLang);
-  const inOptions = useSelector(state => state.options.inOpt);
+
 
   const flags = {
     "auto": autoFlag,
@@ -32,36 +32,42 @@ function DropdownIn() {
   }
 
   const toggleActive = () => {
-    dispatch(dropdownToggleIn(!isActiveIn));
+    setActive(!isActive);
   }
 
   const populateOptions = () => {
-    return inOptions.map(option => (
-      <div key={option.code} className={`option ${inLang.code === option.code ? " active" : ""}`} onClick={() => {
-        dispatch(inputLang(option));
-        dispatch(dropdownToggleIn(false));
+
+    return opt.map((option) => (
+      <div key={option.code} className={`option ${lang.code === option.code ? " active" : ""}`} onClick={() => {
+        if (id == "in") {
+          dispatch(inputLang(option));
+          setActive(false);
+        } else {
+          dispatch(outputLang(option));
+          setActive(false);
+        }
       }} >
         {handleFlag(option.code)}
-        <li value={option.code} >
+        < li value={option.code} >
           {option.name} {option.native ? `(${option.native})` : ""}
-        </li>
+        </li >
       </div >
     ));
   }
 
 
   return (
-    <div className={`dropdown-container ${isActiveIn ? 'active' : ''}`} id="in">
+    <div className={`dropdown-container ${isActive ? 'active' : ''}`} id="in">
       <div className="dropdown-toggle" onClick={toggleActive}>
-        {handleFlag(inLang.code)}
-        <span className="selected" data-value={inLang.code}>{inLang.name} {inLang.native ? `(${inLang.native})` : ""}</span>
+        {handleFlag(lang.code)}
+        <span className="selected" data-value={lang.code}>{lang.name} {lang.native ? `(${lang.native})` : ""}</span>
         <ion-icon name="chevron-down-outline"></ion-icon>
       </div>
-      <ul className="dropdown-menu" style={{ height: `${inOptions.length * 50 + 40}px` }}>
+      <ul className="dropdown-menu" style={{ height: `${opt.length * 50 + 40}px` }}>
         {populateOptions()}
       </ul>
     </div >
   );
 }
 
-export default DropdownIn; 
+export default Dropdown; 

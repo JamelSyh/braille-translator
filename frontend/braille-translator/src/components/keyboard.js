@@ -7,7 +7,7 @@ import SimpleKeyboard from 'react-simple-keyboard';
 import layout from '../constants/keyboardLayout';
 import "../App.css";
 
-const Keyboard = () => {
+const Keyboard = ({ grade }) => {
 
   const [shift, setShift] = useState(false);
   const [caps, setCaps] = useState(false);
@@ -18,15 +18,21 @@ const Keyboard = () => {
   const inText = useSelector(state => state.text.inputText);
   const inLang = useSelector(state => state.language.inLang);
   const outLang = useSelector(state => state.language.outLang);
+  const inTrans = useSelector(state => state.language.inTrans);
+  let normalLayout = "";
 
-  const normalLayout = `${inLang.code}_${outLang.code}${(caps || shift) ? '_shift' : ''}`;
+  if (grade)
+    normalLayout = `${inTrans[0]['grade'].code}_${inTrans[0].code}${(caps || shift) ? '_shift' : ''}`;
+  else
+    normalLayout = `${inLang.code}_${outLang.code}${(caps || shift) ? '_shift' : ''}`;
+
 
   useEffect(() => {
     setLayoutName(normalLayout);
   }, [normalLayout])
 
   useEffect(() => {
-    if (inLang.code === "1" || inLang.code === "2") {
+    if (inLang.code === "1" || inLang.code === "2" || grade) {
       setBrailleMode(true);
     }
     else

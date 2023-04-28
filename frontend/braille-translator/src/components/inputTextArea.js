@@ -5,8 +5,8 @@ import { useDispatch } from "react-redux/es/exports";
 import { useSpeechSynthesis } from 'react-speech-kit';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import { Keyboard, UploadOne, Close, ViewGridCard, Voice, VolumeNotice, PauseOne } from "@icon-park/react";
-import { inputLang, inputText, keyboard, board, pending, outputLang } from "../redux/actions";
-import DropdownIn from './dropdownIn';
+import { inputLang, inputText, keyboard, board, pending, outputLang, outputOptions } from "../redux/actions";
+import Dropdown from './dropdown';
 import brailleToNum from "../constants/brailleToNum";
 import brailleKeys from "../constants/brailleKeys";
 import '../App.css';
@@ -51,9 +51,6 @@ function InputTextArea() {
     }
   };
 
-  useEffect(() => {
-    dispatch(inputText(transcript));
-  }, [transcript, dispatch]);
 
   const handleClear = () => {
     dispatch(inputText(""));
@@ -84,17 +81,6 @@ function InputTextArea() {
       });
   };
 
-  const brailleKeys = {
-    'f': '1',
-    'd': '2',
-    's': '3',
-    'j': '4',
-    'k': '5',
-    'l': '6',
-    ' ': ' ',
-    'backspace': 'backspace',
-    'enter': 'enter'
-  }
   const handleKeyPress = (e) => {
     if (brailleMode) {
       if (outLang.code == "auto")
@@ -118,6 +104,10 @@ function InputTextArea() {
       speak({ text: inText, voice: voiceList[inLang.code] });
     }
   }
+
+  useEffect(() => {
+    dispatch(inputText(transcript));
+  }, [transcript, dispatch]);
 
   useEffect(() => {
     const len = brailleInput.length
@@ -156,6 +146,10 @@ function InputTextArea() {
     else {
       setBrailleMode(false);
       dispatch(board(false));
+      inOpt.forEach((lang) => {
+        if (lang === inLang)
+          dispatch(outputOptions(lang.grade));
+      })
     }
   }, [inLang]);
 
@@ -164,7 +158,7 @@ function InputTextArea() {
 
       <div className="from">
         <span className="heading">From :</span>
-        <DropdownIn id="in" />
+        <Dropdown id="in" opt={inOpt} lang={inLang} braille={brailleMode} />
       </div>
       <div className="text-area">
         {inText !== "" && inLang.code !== "ar" && <div className="clear-btn" onClick={handleClear}> <Close theme="outline" size="23" strokeWidth={3} /></div>}

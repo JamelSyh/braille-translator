@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux/es/hooks/useDispatch";
 import { useSelector } from "react-redux/es/hooks/useSelector";
-import { inputOptions, outputOptions, inputLang, outputText, pending } from "../redux/actions";
+import { inputTransOptions, outputTransOptions, inputTransLang, outputTransLang, outputText, pending } from "../redux/actions";
 
 
 function ConvertTranslate() {
@@ -10,8 +10,8 @@ function ConvertTranslate() {
   const dispatch = useDispatch();
   const inText = useSelector(state => state.text.inputText);
   const inLang = useSelector(state => state.language.inLang);
-  const outLang = useSelector(state => state.language.outLang);
-  const options = useSelector(state => state.options.inOpt);
+  const inTrans = useSelector(state => state.language.inTrans);
+  const outTrans = useSelector(state => state.language.outTrans);
 
   const [debouncedText, setDebouncedText] = useState(inText);
 
@@ -27,11 +27,13 @@ function ConvertTranslate() {
 
   useEffect(() => {
     const getOptions = async () => {
-      const { data } = await axios.get('http://localhost:8000/Translate_options', {}, {
+      const { data } = await axios.get('http://localhost:8000/translate_options', {}, {
       });
       if (data) {
-        dispatch(inputOptions(data.languages));
-        dispatch(outputOptions(data.grades));
+        dispatch(inputTransOptions(data));
+        dispatch(outputTransOptions(data));
+        dispatch(inputTransLang(data[0]));
+        dispatch(outputTransLang(data[1]));
       }
     };
     getOptions();
@@ -40,11 +42,13 @@ function ConvertTranslate() {
 
   useEffect(() => {
     const Transcoding = async () => {
-      const { data } = await axios.post('http://localhost:8000/transcriptor', {}, {
+      const { data } = await axios.post('http://localhost:8000/translator', {}, {
         params: {
           text: debouncedText,
-          source: inLang.code,
-          target: outLang.code,
+          source_lang: inTrans[0].code,
+          source_grade: inTrans[0].grade.code,
+          target_lang: outTrans[0].code,
+          target_grade: outTrans[0].grade.code
         }
       });
       if (data) {
@@ -54,10 +58,13 @@ function ConvertTranslate() {
           dispatch(outputText(""));
 
       }
+      if (debouncedText === "")
+        dispatch(outputText(""));
+
       dispatch(pending(false));
     };
     Transcoding();
-  }, [debouncedText, inLang, outLang, dispatch]);
+  }, [debouncedText, inText, inTrans, outTrans, dispatch]);
 }
 
 export default ConvertTranslate;

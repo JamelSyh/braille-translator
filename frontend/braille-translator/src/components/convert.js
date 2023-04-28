@@ -27,11 +27,11 @@ function Convert() {
 
   useEffect(() => {
     const getOptions = async () => {
-      const { data } = await axios.get('http://localhost:8000/Transcript_options', {}, {
+      const { data } = await axios.get('http://localhost:8000/transcript_options', {}, {
       });
       if (data) {
-        dispatch(inputOptions(data.languages));
-        dispatch(outputOptions(data.grades));
+        dispatch(inputOptions(data));
+        dispatch(outputOptions(data[0]['grade']));
       }
     };
     getOptions();

@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux/es/exports";
 import { switchOption, switchLang, switchText, mobile } from "../redux/actions";
 import Convert from '../components/convert';

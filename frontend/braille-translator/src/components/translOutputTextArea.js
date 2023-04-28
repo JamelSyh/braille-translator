@@ -2,15 +2,18 @@
 import { useSelector } from "react-redux/es/exports";
 import { useDispatch } from "react-redux/es/exports";
 import { outputText } from "../redux/actions";
-import DropdownOut from './dropdownOut';
+import TransDropdown from "./transDropdown";
+import TransDropdownGrade from "./transDropdownGrade";
 import { DownloadOne, Copy } from "@icon-park/react";
 import '../App.css';
 
-function TranslOutputTextArea({ options }) {
+function TranslOutputTextArea() {
 
 
   const dispatch = useDispatch();
   const outText = useSelector(state => state.text.outputText);
+  const outTrans = useSelector(state => state.language.outTrans);
+  const outTransOpt = useSelector(state => state.options.outTransOpt);
   const inLang = useSelector(state => state.language.inLang);
   const pending = useSelector(state => state.text.pending);
 
@@ -34,20 +37,17 @@ function TranslOutputTextArea({ options }) {
 
 
   const placeholderHandler = () => {
-    if (inLang.code === 'ar')
-      return pending ? 'جار الترجمة...' : 'الترجمة';
-    else
-      return pending ? 'translating...' : "translation"
+    return pending ? 'translating...' : "translation"
   }
 
   return (
     <div className="card output-wrapper">
       <div className="to">
         <span className="heading">To :</span>
-        <DropdownOut id="out" />
-        <DropdownOut id="out" />
+        <TransDropdown id="out" opt={outTransOpt} lang={outTrans} />
+        <TransDropdownGrade id="out" opt={outTrans} lang={outTrans} />
       </ div>
-      <textarea id="output-text" dir={inLang.code === 'ar' ? 'rtl' : ''} cols="30" rows="6" placeholder={placeholderHandler()} disabled value={outText ? outText : ""} onChange={event => dispatch(outputText(event.target.value))}></textarea>
+      <textarea id="output-text" cols="30" rows="6" placeholder={placeholderHandler()} disabled value={outText ? outText : ""} onChange={event => dispatch(outputText(event.target.value))}></textarea>
       {outText &&
         <div className="card-bottom">
           {(inLang.code !== "1" && inLang.code !== "2") && <div className="icoon" onClick={handleDownload} >

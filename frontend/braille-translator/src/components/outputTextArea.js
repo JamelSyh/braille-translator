@@ -1,16 +1,20 @@
+import { useEffect } from "react";
 import { useSelector } from "react-redux/es/exports";
 import { useDispatch } from "react-redux/es/exports";
-import { outputText } from "../redux/actions";
-import DropdownOut from './dropdownOut';
+import { outputText, inputOptions } from "../redux/actions";
+import Dropdown from './dropdown';
 import { DownloadOne, Copy } from "@icon-park/react";
 import '../App.css';
 
-function OutputTextArea({ options }) {
+function OutputTextArea() {
 
 
   const dispatch = useDispatch();
   const outText = useSelector(state => state.text.outputText);
   const inLang = useSelector(state => state.language.inLang);
+  const outLang = useSelector(state => state.language.outLang);
+  const inOpt = useSelector(state => state.options.inOpt);
+  const outOpt = useSelector(state => state.options.outOpt);
   const pending = useSelector(state => state.text.pending);
 
 
@@ -39,11 +43,20 @@ function OutputTextArea({ options }) {
       return pending ? 'translating...' : "translation"
   }
 
+  useEffect(() => {
+    if (outLang.code !== "1" || outLang.code !== "2") {
+      outOpt.forEach((lang) => {
+        if (lang === outLang)
+          dispatch(inputOptions(lang.grade));
+      });
+    }
+  }, [outLang])
+
   return (
     <div className="card output-wrapper">
       <div className="to">
         <span className="heading">To :</span>
-        <DropdownOut id="out" />
+        <Dropdown id="out" opt={outOpt} lang={outLang} />
       </ div>
       <textarea id="output-text" dir={inLang.code === 'ar' ? 'rtl' : ''} cols="30" rows="6" placeholder={placeholderHandler()} disabled value={outText ? outText : ""} onChange={event => dispatch(outputText(event.target.value))}></textarea>
       {outText &&

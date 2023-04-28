@@ -1,5 +1,5 @@
-import { dropdownToggleOut, outputLang } from "../redux/actions";
-import { useSelector } from "react-redux/es/exports";
+import { inputTransLang, outputTransLang } from "../redux/actions";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux/es/exports";
 import enFlag from "../flags/en-US.svg"
 import arFlag from "../flags/ar-DZ.svg"
@@ -8,12 +8,15 @@ import autoFlag from "../flags/global.svg"
 import brailleFlag from "../flags/braille.svg"
 import '../App.css';
 
-function DropdownOut() {
+
+function TransDropdownGrade({ id, opt, lang }) {
+
+  let grade = lang[0]['grade']
+
+  const [isActive, setActive] = useState(false);
 
   const dispatch = useDispatch();
-  const isActiveOut = useSelector(state => state.dropdown.out);
-  const outLang = useSelector(state => state.language.outLang);
-  const outOptions = useSelector(state => state.options.outOpt);
+
 
   const flags = {
     "auto": autoFlag,
@@ -32,36 +35,50 @@ function DropdownOut() {
   }
 
   const toggleActive = () => {
-    dispatch(dropdownToggleOut(!isActiveOut));
+    setActive(!isActive);
   }
 
-
   const populateOptions = () => {
-    return outOptions.map(option => (
-      <div key={option.code} className={`option ${outLang.code === option.code ? " active" : ""}`} onClick={() => {
-        dispatch(outputLang(option));
-        dispatch(dropdownToggleOut(false));
-      }}>
+
+    return opt[1].map((option, index) => (
+      <div key={index} className={`option ${grade.code === option.code ? " active" : ""}`} onClick={() => {
+
+
+        lang[0]['grade'] = option
+
+
+        if (id == "in") {
+          dispatch(inputTransLang(lang));
+        } else {
+          dispatch(outputTransLang(lang));
+        }
+        setActive(false);
+
+      }} >
         {handleFlag(option.code)}
-        <li value={option.code} >
+        < li value={option.code} >
           {option.name} {option.native ? `(${option.native})` : ""}
-        </li>
-      </div>
+        </li >
+      </div >
     ));
   }
 
+  useEffect(() => {
+    populateOptions();
+  }, [grade]);
+
   return (
-    <div className={`dropdown-container ${isActiveOut ? 'active' : ''}`} id="out">
+    <div className={`dropdown-container ${isActive ? 'active' : ''}`} id="in">
       <div className="dropdown-toggle" onClick={toggleActive}>
-        {handleFlag(outLang.code)}
-        <span className="selected" data-value={outLang.code}>{outLang.name} {outLang.native ? `(${outLang.native})` : ""}</span>
+        {handleFlag(grade.code)}
+        <span className="selected" data-value={grade.code}>{grade.name} {grade.native ? `(${grade.native})` : ""}</span>
         <ion-icon name="chevron-down-outline"></ion-icon>
       </div>
-      <ul className="dropdown-menu" style={{ height: `${outOptions.length * 50 + 40}px` }}>
+      <ul className="dropdown-menu" style={{ height: `${opt[1].length * 50 + 40}px` }}>
         {populateOptions()}
       </ul>
-    </div>
+    </div >
   );
 }
 
-export default DropdownOut; 
+export default TransDropdownGrade; 

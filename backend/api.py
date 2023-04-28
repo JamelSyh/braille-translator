@@ -1,9 +1,26 @@
 from braille_transcriptor.transcriptor import BrailleTranscriptor, strategies
-from fastapi import FastAPI, File, UploadFile, Response
+from fastapi import FastAPI, File, UploadFile, Response, Body
 from fastapi.middleware.cors import CORSMiddleware
+import requests
+from pydantic import BaseModel
+from typing import Dict
 
 import pytesseract
 from PIL import Image
+
+key = "AIzaSyCHUCmpR7cT_yDFHC98CZJy2LTms-IwDlM"
+
+url = "https://translation.googleapis.com/language/translate/v2"
+params = {
+    "q": "Hello, world!",
+    "target": "es",
+    "source": "en",
+    "key": key
+}
+headers = {
+    "Content-Type": "application/json",
+    'referer': 'http://localhost:8000'
+}
 
 
 app = FastAPI()
@@ -23,98 +40,192 @@ strategies = {
     # add strategies here
 }
 
-languages = [
+transcript_options = [
     {
         "name": "Auto",
         "native": "Detect",
         "code": "auto",
+        'grade': [
+                {
+                    "name": "Grade 1",
+                    "code": "1"
+                },
+            {
+                    "name": "Grade 2",
+                    "code": "2"
+            }
+        ],
     },
+
     {
         "name": "Arabic",
         "native": "العربية",
         "code": "ar",
+        'grade': [
+            {
+                "name": "Grade 1",
+                "code": "1"
+            },
+            # {
+            #     "name": "Grade 2",
+            #     "code": "2"
+            # }
+        ],
     },
+
     {
         "name": "English",
-        "native": "English",
+        "native": "english",
         "code": "en",
+        'grade': [
+            {
+                "name": "Grade 1",
+                "code": "1"
+            },
+            {
+                "name": "Grade 2",
+                "code": "2"
+            }
+        ],
     },
     {
         "name": "French",
-        "native": "Francais",
+        "native": "francais",
         "code": "fr",
+        'grade': [
+            {
+                "name": "Grade 1",
+                "code": "1"
+            },
+            # {
+            #     "name": "Grade 2",
+            #     "code": "2"
+            # }
+        ],
     },
+
+]
+
+translate_options = [
+    [
+        {
+            "name": "English",
+            "native": "english",
+            "code": "en",
+            'grade':
+            {
+                "name": "Grade 1",
+                "code": "1"
+            },
+
+        },
+        [
+            {
+                "name": "Grade 1",
+                "code": "1"
+            },
+            {
+                "name": "Grade 2",
+                "code": "2"
+            }
+        ],
+    ],
+    [
+        {
+            "name": "French",
+            "native": "francais",
+            "code": "fr",
+            'grade':
+            {
+                "name": "Grade 1",
+                "code": "1"
+            },
+        },
+        [
+            {
+                "name": "Grade 1",
+                "code": "1"
+            },
+            {
+                "name": "Grade 2",
+                "code": "2"
+            },
+        ],
+    ],
+    [
+        {
+            "name": "Arabic",
+            "native": "العربية",
+            "code": "ar",
+            'grade':
+            {
+                "name": "Grade 1",
+                "code": "1"
+            },
+        },
+        [
+            {
+                "name": "Grade 1",
+                "code": "1"
+            },
+            # {
+            #     "name": "Grade 2",
+            #     "code": "2"
+            # }
+        ],
+    ],
 ]
 
 
-grades = [
-    {
-        "name": "Grade 1",
-        "code": "1"
-    },
-    {
-        "name": "Grade 2",
-        "code": "2"
-    }
-]
-
-input_translate = [
-    {
-        "name": "Arabic",
-        "native": "العربية",
-        "code": "ar",
-    },
-    {
-        "name": "English",
-        "native": "English",
-        "code": "en",
-    },
-    {
-        "name": "French",
-        "native": "Francais",
-        "code": "fr",
-    },
-]
-output_translate = [
-    {
-        "name": "Arabic",
-        "native": "العربية",
-        "code": "ar",
-    },
-    {
-        "name": "English",
-        "native": "English",
-        "code": "en",
-    },
-    {
-        "name": "French",
-        "native": "Francais",
-        "code": "fr",
-    },
-]
-
-
-def exists(code, options):
+def lang_exist(code, options):
     return any(option["code"] == code for option in options)
 
 
-@app.post("/transcriptor/")
-async def translate_to_braille(text: str, source: str, target: str):
+def grade_exist(code, lang, options):
+    for option in options:
+        if (lang == option['code']):
+            return any(grade['code'] == code for grade in option['grade'])
+
+
+@ app.post("/transcriptor/")
+async def transcript(text: str, source: str, target: str):
 
     if (source == "auto" or target == "auto"):
         return
-    if (exists(source, languages)):
+    if (lang_exist(source, transcript_options)):
         transcriptor = BrailleTranscriptor(
             strategy=strategies[source]['strate'], grade=int(target))
         return {"result": transcriptor.to_braille(text)}
-    elif (exists(source, grades)):
+    elif (grade_exist(source, target, transcript_options)):
         transcriptor = BrailleTranscriptor(
             strategy=strategies[target]['strate'], grade=int(source))
         return {"result": transcriptor.from_braille(text)}
 
 
-@app.post("/uploadfile/")
-async def create_upload_file(file: UploadFile = File(...), lang: str = "eng", timestamp=""):
+@app.post("/translator/")
+async def translate(text: str, source_lang: str, source_grade: str, target_lang: str, target_grade: str):
+    transcriptor = BrailleTranscriptor(
+        strategy=strategies[source_lang]['strate'], grade=int(source_grade))
+    text = transcriptor.from_braille(text)
+    url = "https://api.mymemory.translated.net/get"
+    params = {"q": text, "langpair": f"{source_lang}|{target_lang}"}
+    try:
+        response = requests.get(url, params=params)
+    except:
+        return {"result": text}
+
+    if (text):
+        translation = response.json()["responseData"]["translatedText"]
+        transcriptor = BrailleTranscriptor(
+            strategy=strategies[target_lang]['strate'], grade=int(target_grade))
+        # print(text, translation)
+        return {"result": transcriptor.to_braille(translation)}
+    else:
+        return
+
+
+@ app.post("/uploadfile/")
+async def create_upload_file(file: UploadFile = File(...), lang: str = "eng"):
     if lang == "auto":
         return
     tessLang = strategies[lang]['lang']
@@ -124,7 +235,7 @@ async def create_upload_file(file: UploadFile = File(...), lang: str = "eng", ti
     return {"text": printable_text}
 
 
-@app.get("/downloadfile/")
+@ app.get("/downloadfile/")
 async def download_file(braille: str):
     file_contents = braille
     response = Response(content=file_contents)
@@ -133,11 +244,11 @@ async def download_file(braille: str):
     return response
 
 
-@app.get("/Transcript_options")
+@ app.get("/transcript_options")
 async def getTranscribeOptions():
-    return {"languages": languages, "grades": grades}
+    return transcript_options
 
 
-@app.get("/Translate_options")
+@ app.get("/translate_options")
 async def getTranslateOptions():
-    return {"languages": input_translate, "grades": output_translate}
+    return translate_options

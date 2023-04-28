@@ -1,17 +1,21 @@
 import TranslInputTextArea from '../components/translInputTextArea';
 import TranslOutputTextArea from '../components/translOutputTextArea';
 import { useDispatch, useSelector } from "react-redux/es/exports";
-import { switchOption, switchLang, switchText } from "../redux/actions";
+import { switchTransOption, switchTransLang, switchText } from "../redux/actions";
 import ConvertTranslate from '../components/convertTranslate';
+import Keyboard from '../components/keyboard';
+import BrailleBoard from '../components/brailleBoard';
 
 
 function Translator() {
 
   const dispatch = useDispatch();
+  const kb = useSelector(state => state.functions.keyboard);
+  const brailleBoard = useSelector(state => state.functions.board);
 
   const swap = () => {
-    dispatch(switchOption());
-    dispatch(switchLang());
+    dispatch(switchTransOption());
+    dispatch(switchTransLang());
     dispatch(switchText());
   }
 
@@ -30,6 +34,8 @@ function Translator() {
           <TranslOutputTextArea />
         </div>
       </div>
+      {brailleBoard && <BrailleBoard />}
+      {kb && <Keyboard grade />}
     </>
   );
 }

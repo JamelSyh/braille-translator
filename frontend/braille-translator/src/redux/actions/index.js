@@ -1,13 +1,13 @@
 
 
-export const inputOptions = (inOpt = [{ name: "Auto", code: "auto", native: "Detect" }]) => {
+export const inputOptions = (inOpt = []) => {
   return {
     type: "INPUT_OPTIONS",
     payload: { inOpt: inOpt }
   }
 }
 
-export const outputOptions = (outOpt = [{ name: "Grade 1", code: "1" }]) => {
+export const outputOptions = (outOpt = []) => {
   return {
     type: "OUTPUT_OPTIONS",
     payload: { outOpt: outOpt }
@@ -20,14 +20,14 @@ export const switchOption = () => {
   }
 }
 
-export const inputLang = (inLang = { name: "Auto", code: "auto", native: "Detect" }) => {
+export const inputLang = (inLang = {}) => {
   return {
     type: "INPUT_LANGUAGE",
     payload: { inLang: inLang }
   }
 }
 
-export const outputLang = (outLang = { name: "Grade 1", code: "1" }) => {
+export const outputLang = (outLang = {}) => {
   return {
     type: "OUTPUT_LANGUAGE",
     payload: { outLang: outLang }
@@ -40,6 +40,46 @@ export const switchLang = () => {
   }
 }
 
+export const inputTransOptions = (inTransOpt = []) => {
+  return {
+    type: "INPUT_TRANS_OPTIONS",
+    payload: { inTransOpt: inTransOpt }
+  }
+}
+
+export const outputTransOptions = (outTransOpt = []) => {
+  return {
+    type: "OUTPUT_TRANS_OPTIONS",
+    payload: { outTransOpt: outTransOpt }
+  }
+}
+
+export const switchTransOption = () => {
+  return {
+    type: "SWITCH_TRANS_OPTIONS",
+  }
+}
+
+
+export const inputTransLang = (inTrans = []) => {
+  return {
+    type: "INPUT_TRANSLATE",
+    payload: { inTrans: inTrans }
+  }
+}
+
+export const outputTransLang = (outTrans = []) => {
+  return {
+    type: "OUTPUT_TRANSLATE",
+    payload: { outTrans: outTrans }
+  }
+}
+
+export const switchTransLang = () => {
+  return {
+    type: "SWITCH_TRANS",
+  }
+}
 
 export const dropdownToggleIn = (state = false) => {
   return {
