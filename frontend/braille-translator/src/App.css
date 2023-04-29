@@ -640,8 +640,8 @@ body {
   flex-flow: row wrap;
   padding: 30px 30px 20px 30px;
   margin-top: 20%;
-  color: #2f2f2f;
-  background-color: #fff;
+  color: var(--text-color);
+  background-color: var(--light-bg-color);
 }
 
 .footer > * {
@@ -654,26 +654,23 @@ body {
 }
 
 .footer__logo {
-  font-family: 'Pacifico', cursive;
-  font-weight: 400;
-  text-transform: lowercase;
   font-size: 1.5rem;
+  color: var(--primary-color);
 }
 
 .footer__addr h2 {
   margin-top: 1.3em;
   font-size: 15px;
-  font-weight: 400;
 }
 
 .nav__title {
-  font-weight: 400;
   font-size: 15px;
 }
 
 .footer address {
   font-style: normal;
-  color: #999;
+  margin-top: 10px;
+  color: var(--secondary-text-color);
 }
 
 .footer__btn {
@@ -682,9 +679,9 @@ body {
   justify-content: center;
   height: 36px;
   max-width: max-content;
-  background-color: rgb(33, 33, 33, 0.07);
+  background-color: var(--bg-color);
   border-radius: 100px;
-  color: #2f2f2f;
+  color: var(--text-color);
   line-height: 0;
   margin: 0.6em 0;
   font-size: 1rem;

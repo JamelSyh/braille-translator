@@ -53,7 +53,7 @@ transcript_options = [
             {
                     "name": "Grade 2",
                     "code": "2"
-            }
+                    }
         ],
     },
 

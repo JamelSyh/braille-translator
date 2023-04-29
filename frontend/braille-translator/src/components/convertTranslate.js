@@ -22,7 +22,7 @@ function ConvertTranslate() {
       setDebouncedText(inText);
     }, 500);
     return () => { clearTimeout(timer); };
-  }, [inText, inLang, dispatch]);
+  }, [inText, inTrans, dispatch]);
 
 
   useEffect(() => {
