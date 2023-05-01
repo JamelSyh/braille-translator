@@ -34,7 +34,7 @@
 }
 
 body {
-  height: 100vh;
+  /* height: 100vh; */
   /* width: 200vh; */
   /* display: flex; */
   /* align-items: flex-start; */
@@ -57,7 +57,7 @@ body.dark {
   width: 1200px;
   padding: 0 20px;
   display: flex;
-  margin: 15% auto;
+  margin: 10% auto 5% auto;
   gap: 10px;
 }
 .container .card {
@@ -498,8 +498,8 @@ nav {
 /* ===================== keyboard ====================== */
 
 #kcontainer {
-  margin: 60px auto 0 auto;
-  width: 60%;
+  margin: 0px auto 0 auto;
+  width: 40%;
   height: 230px;
   border-radius: 5px;
   -webkit-user-select: none;  /* Disable selection on Chrome, Safari, etc. */

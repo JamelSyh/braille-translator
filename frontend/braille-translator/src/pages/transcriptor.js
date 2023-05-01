@@ -44,7 +44,7 @@ function Transcriptor() {
   return (
     <>
       <Convert />
-      <div>
+      <div className="main-container">
         <div className="container">
           <InputTextArea />
           <div className="center">
