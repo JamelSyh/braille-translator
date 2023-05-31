@@ -81,6 +81,26 @@ export const switchTransLang = () => {
   }
 }
 
+export const searchLang = (lang = []) => {
+  return {
+    type: "SEARCH_LANGUAGE",
+    payload: { lang: lang }
+  }
+}
+export const searchLangOptions = (langOpt = []) => {
+  return {
+    type: "SEARCH_LANGUAGE_OPTIONS",
+    payload: { langOpt: langOpt }
+  }
+}
+
+export const searchData = (data = []) => {
+  return {
+    type: "SEARCH_DATA",
+    payload: { data: data }
+  }
+}
+
 export const dropdownToggleIn = (state = false) => {
   return {
     type: "TOGGLE_IN",

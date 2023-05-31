@@ -23,16 +23,10 @@ function DarkModeButton() {
   }, [isDark]);
 
   return (
-    <div className={`mode ${isDark ? "dark" : ""} dark`}>
-      <label className="toggle" htmlFor="dark-mode-btn" onChange={handleDarkMode}>
-        <div className="toggle-track">
-          <input type="checkbox" className="toggle-checkbox" id="dark-mode-btn" />
-          <span className="toggle-thumb"></span>
-          <ion-icon name="sunny-outline"></ion-icon>
-          <ion-icon name="moon-outline"></ion-icon>
-        </div>
-      </label>
-    </div>
+    <label class="switch" >
+      <input id="checkbox" onClick={handleDarkMode} type="checkbox" />
+      <span class="slider"></span>
+    </label>
   )
 }
 

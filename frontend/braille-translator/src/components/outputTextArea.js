@@ -44,7 +44,7 @@ function OutputTextArea() {
   }
 
   useEffect(() => {
-    if (outLang.code !== "1" || outLang.code !== "2") {
+    if (outLang.code !== "1" && outLang.code !== "2") {
       outOpt.forEach((lang) => {
         if (lang === outLang)
           dispatch(inputOptions(lang.grade));

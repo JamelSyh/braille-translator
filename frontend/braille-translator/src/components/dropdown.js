@@ -1,6 +1,6 @@
-import { inputLang, outputLang, inputTransLang, outputTransLang } from "../redux/actions";
+import { inputLang, outputLang } from "../redux/actions";
 import { useState } from 'react';
-import { useDispatch } from "react-redux/es/exports";
+import { useDispatch, useSelector } from "react-redux/es/exports";
 import enFlag from "../flags/en-US.svg"
 import arFlag from "../flags/ar-DZ.svg"
 import frFlag from "../flags/fr-FR.svg"
@@ -13,6 +13,10 @@ function Dropdown({ id, opt, lang }) {
   const [isActive, setActive] = useState(false);
 
   const dispatch = useDispatch();
+  const inLang = useSelector(state => state.language.inLang);
+  const outLang = useSelector(state => state.language.outLang);
+  const inOpt = useSelector(state => state.options.inOpt);
+  const outOpt = useSelector(state => state.options.outOpt);
 
 
   const flags = {

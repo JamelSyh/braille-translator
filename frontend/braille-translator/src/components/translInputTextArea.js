@@ -20,7 +20,7 @@ function TranslInputTextArea() {
 
   // const [selectedFile, setSelectedFile] = useState(null);
   const [brailleInput, setBrailleInput] = useState("");
-  // const [brailleMode, setBrailleMode] = useState("");
+  const [brailleMode, setBrailleMode] = useState("");
   const [key, setKey] = useState('');
 
   const handleClear = () => {

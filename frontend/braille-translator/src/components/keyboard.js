@@ -7,7 +7,7 @@ import SimpleKeyboard from 'react-simple-keyboard';
 import layout from '../constants/keyboardLayout';
 import "../App.css";
 
-const Keyboard = ({ grade }) => {
+const VKeyboard = ({ grade, inLang }) => {
 
   const [shift, setShift] = useState(false);
   const [caps, setCaps] = useState(false);
@@ -16,7 +16,6 @@ const Keyboard = ({ grade }) => {
 
   const dispatch = useDispatch();
   const inText = useSelector(state => state.text.inputText);
-  const inLang = useSelector(state => state.language.inLang);
   const outLang = useSelector(state => state.language.outLang);
   const inTrans = useSelector(state => state.language.inTrans);
   let normalLayout = "";
@@ -103,4 +102,4 @@ const Keyboard = ({ grade }) => {
   );
 };
 
-export default Keyboard;
+export default VKeyboard;

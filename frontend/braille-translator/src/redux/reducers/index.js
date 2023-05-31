@@ -5,6 +5,7 @@ import optionsReducer from "./optionsReducer";
 import textReducer from "./textReducer";
 import functionsReducer from "./functionsReducer";
 import tabReducer from "./tabReducer";
+import searchReducer from "./searchReducer";
 
 export const reducers = combineReducers({
   options: optionsReducer,
@@ -13,5 +14,6 @@ export const reducers = combineReducers({
   dropdown: dropdownReducer,
   functions: functionsReducer,
   tab: tabReducer,
+  search: searchReducer,
 });
 

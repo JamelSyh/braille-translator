@@ -21,7 +21,7 @@ function InputTextArea() {
   const outOpt = useSelector(state => state.options.outOpt);
   const kb = useSelector(state => state.functions.keyboard);
   const brailleBoard = useSelector(state => state.functions.board);
-  const pend = useSelector(state => state.text.pending);
+  // const pend = useSelector(state => state.text.pending);
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [brailleMode, setBrailleMode] = useState(false);
@@ -158,7 +158,7 @@ function InputTextArea() {
 
       <div className="from">
         <span className="heading">From :</span>
-        <Dropdown id="in" opt={inOpt} lang={inLang} braille={brailleMode} />
+        <Dropdown id="in" opt={inOpt} lang={inLang} />
       </div>
       <div className="text-area">
         {inText !== "" && inLang.code !== "ar" && <div className="clear-btn" onClick={handleClear}> <Close theme="outline" size="23" strokeWidth={3} /></div>}

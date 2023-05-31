@@ -38,13 +38,7 @@ function Scan() {
   // }, [screenWidth, dispatch]);
 
   return (
-    <div>
-      <div className="scan-container">
-        <div className="container">
-          <ScanArea />
-        </div>
-      </div>
-    </div>
+    <></>
   );
 }
 

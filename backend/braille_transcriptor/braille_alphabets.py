@@ -5,7 +5,7 @@ class Language(Enum):
     Arabic = "Arabic"
     English = "English"
     French = "French"
-    # you can add more languages here
+ # you can add more languages here
 
 
 class BrailleAlphabet:
@@ -215,10 +215,9 @@ english_alphabet = BrailleAlphabet(
             'other': '⠋⠗⠗',
             'our': '⠋⠥',
             'out': '⠋⠥',
-            'p': 'p',
             'part': '⠏⠁',
             'particularly': '⠏⠁l',
-            'people': '⠏⠑⠛',
+            'people': 'p',
             'perceive': '⠏⠃',
             'perceiving': '⠏⠃g',
             'perhaps': '⠏⠛',
@@ -226,6 +225,68 @@ english_alphabet = BrailleAlphabet(
             'please': '⠏⠇⠑',
             'point': '⠏⠕⠋',
             'possible': '⠏⠥⠐',
+            'people': 'p⠏',
+            'perceive': 'p⠻cv⠏⠻⠉⠧',
+            'perceiving': 'p⠻cvg⠏⠻⠉⠧⠛',
+            'perhaps': 'p⠻h⠏⠻⠓',
+            'question': '⠐q⠐⠟',
+            'quick': 'qk⠟⠅',
+            'quite': 'q⠟',
+            'rather': 'r⠗',
+            'receive': 'rcv⠗⠉⠧',
+            'receiving': 'rcvg⠗⠉⠧⠛',
+            'rejoice': 'rjc⠗⠚⠉',
+            'rejoicing': 'rjcg⠗⠚⠉⠛',
+            'right': '⠐r⠐⠗',
+            'said': 'sd⠎⠙',
+            'sh': '⠩⠩',
+            'shall': '⠩⠩',
+            'should ': '⠩d⠩⠙',
+            'sion': '⠨n⠨⠝',
+            'so': 's⠎',
+            'some': '⠐s⠐⠎',
+            'spirit ': '⠸s⠸⠎',
+            'st': '⠌⠌',
+            'still': '⠌⠌',
+            'such': 's⠡⠎⠡',
+            'th': '⠹⠹',
+            'that': 't⠞',
+            'the': '⠮⠮',
+            'their': '⠸⠮⠸⠮',
+            'themselves': '⠮mvs⠮⠍⠧⠎',
+            'there': '⠐⠮⠐⠮',
+            'these': '⠘⠮⠘⠮',
+            'this ': '⠹⠹',
+            'those': '⠘⠹⠘⠹',
+            'through': '⠐⠹⠐⠹',
+            'thyself': '⠹yf⠹⠽⠋',
+            'time': '⠐t⠐⠞',
+            'tion': '⠰n⠰⠝',
+            'today': 'td⠞⠙',
+            'together': 'tgr⠞⠛⠗',
+            'tomorrow': 'tm⠞⠍',
+            'tonight': 'tn⠞⠝',
+            'under': '⠐u⠐⠥',
+            'upon': '⠘u⠘⠥',
+            'us': 'u⠥',
+            'very ': '  v⠧',
+            'was': '⠴⠴',
+            'were ': '  ⠶⠶',
+            'wh': '⠱⠱',
+            'where': '⠐⠱⠐⠱',
+            'which': '⠱⠱',
+            'whose': '⠘⠱⠘⠱',
+            'will ': '  w⠺',
+            'with': ' ⠾⠾',
+            'word': '⠘w⠘⠺',
+            'work': '⠐w⠐⠺',
+            'world': '⠸w⠸⠺',
+            'would': 'wd⠺⠙',
+            'you': 'y⠽',
+            'young': '⠐y⠐⠽',
+            'your': 'yr⠽⠗',
+            'yourself': 'yrf⠽⠗⠋',
+            'yourselves': 'yrvs⠽⠗⠧⠎',
         },
         'group_sign': {
             r'be': r'⠆',
@@ -250,6 +311,7 @@ english_alphabet = BrailleAlphabet(
         }
     }
 )
+
 
 french_alphabet = BrailleAlphabet(
     name=Language.French,
@@ -292,9 +354,8 @@ french_alphabet = BrailleAlphabet(
             '|': '⠸', '\\': '⠐⠌'},
     },
     grade2_map={
-        '1': '⠁',
-        '2': '⠃',
-        '3': '⠉',
+        'standalone': {},
+        'group_sign': {}
         # and so on...
     }
 )
@@ -307,10 +368,10 @@ arabic_alphabet = BrailleAlphabet(
             'ث': '⠹', 'ج': '⠚', 'ح': '⠱',
             'خ': '⠭', 'د': '⠙', 'ذ': '⠮',
             'ر': '⠗', 'ز': '⠵', 'س': '⠎',
-            'ش': '⠩	', 'ص': '⠯', 'ض': '⠫',
-            'ظ': '⠿	', 'ع': '⠷', 'غ': '⠣',
+            'ش': '⠩', 'ص': '⠯', 'ض': '⠫',
+            'ظ': '⠿', 'ع': '⠷', 'غ': '⠣',
             'ف': '⠋', 'ق': '⠟', 'ك': '⠅',
-            'ل': '⠇', 'م': '⠍', 'ن': '⠝	',
+            'ل': '⠇', 'م': '⠍', 'ن': '⠝  ',
             'ه': '⠓', 'و': '⠺', 'ي': '⠊',
             'ة': '⠡', 'لا': '⠧', 'ى': '⠕',
             'ء': '⠄', 'أ': '⠌', 'إ': '⠅',
@@ -348,9 +409,8 @@ arabic_alphabet = BrailleAlphabet(
         }
     },
     grade2_map={
-        '1': '⠁',
-        '2': '⠃',
-        '3': '⠉',
+        'standalone': {},
+        'group_sign': {}
         # and so on...
     }
 )
@@ -360,4 +420,4 @@ class Dictionary(Enum):
     English = english_alphabet
     French = french_alphabet
     Arabic = arabic_alphabet
-    # add Braille alphabets here
+# add Braille alphabets here

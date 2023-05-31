@@ -3,6 +3,7 @@ import { Outlet, Link } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
 import { useSelector } from "react-redux/es/exports";
 import { useDispatch } from "react-redux/es/exports";
+import DarkModeButton from "../components/darkmodebutton";
 import { setTab } from "../redux/actions";
 import logo from '../logo.svg';
 
@@ -29,8 +30,8 @@ function NavBar() {
     { name: "Transcriptor" },
     { name: "Translator" },
     { name: "Scan" },
+    { name: "Lookup" },
     { name: "About" },
-    { name: "Contact" },
   ]
 
   const populateMenu = () => {
@@ -54,18 +55,23 @@ function NavBar() {
   return (
     <>
       <nav>
-        <a href="/" className="logo">
-          <img src={logo} alt="logo" className="logoimg" />
-          doTwise
-        </a>
-        <ul className={`nav-links ${isActive ? "nav-active" : ""} `}>
-          {populateMenu()}
-        </ul >
-        <div className={`burger ${isActive ? "toggle" : ""} `} onClick={handleDropdown}>
-          <div className="line"></div>
-          <div className="line"></div>
-          <div className="line"></div>
-        </div>
+        <div className="container">
+          <div className="nav-container">
+            <a href="/" className="logo">
+              <img src={logo} alt="logo" className="logoimg" />
+              doTwise
+            </a>
+            <ul className={`nav-links ${isActive ? "nav-active" : ""} `}>
+              {populateMenu()}
+              <li><DarkModeButton /></li>
+            </ul >
+            <div className={`burger ${isActive ? "toggle" : ""} `} onClick={handleDropdown}>
+              <div className="line"></div>
+              <div className="line"></div>
+              <div className="line"></div>
+            </div>
+          </div>
+        </div >
       </nav >
       <Outlet />
     </>

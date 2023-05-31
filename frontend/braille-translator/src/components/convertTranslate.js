@@ -2,13 +2,14 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux/es/hooks/useDispatch";
 import { useSelector } from "react-redux/es/hooks/useSelector";
-import { inputTransOptions, outputTransOptions, inputTransLang, outputTransLang, outputText, pending } from "../redux/actions";
+import { inputTransOptions, outputTransOptions, inputTransLang, outputTransLang, inputText, outputText, pending } from "../redux/actions";
 
 
 function ConvertTranslate() {
 
   const dispatch = useDispatch();
   const inText = useSelector(state => state.text.inputText);
+  const outText = useSelector(state => state.text.outputText);
   const inLang = useSelector(state => state.language.inLang);
   const inTrans = useSelector(state => state.language.inTrans);
   const outTrans = useSelector(state => state.language.outTrans);
@@ -34,6 +35,12 @@ function ConvertTranslate() {
         dispatch(outputTransOptions(data));
         dispatch(inputTransLang(data[0]));
         dispatch(outputTransLang(data[1]));
+
+        if (inLang.code !== "1" && inLang.code !== "2") {
+          dispatch(inputText(outText));
+        } else {
+          dispatch(inputText(inText));
+        }
       }
     };
     getOptions();

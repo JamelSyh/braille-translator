@@ -4,7 +4,7 @@ import { switchOption, switchLang, switchText, mobile } from "../redux/actions";
 import Convert from '../components/convert';
 import InputTextArea from '../components/inputTextArea';
 import OutputTextArea from '../components/outputTextArea';
-import Keyboard from '../components/keyboard';
+import VKeyboard from '../components/keyboard';
 import BrailleBoard from '../components/brailleBoard';
 import '../App.css';
 
@@ -17,6 +17,7 @@ function Transcriptor() {
   const dispatch = useDispatch();
   const kb = useSelector(state => state.functions.keyboard);
   const brailleBoard = useSelector(state => state.functions.board);
+  const inLang = useSelector(state => state.language.inLang);
 
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
@@ -44,8 +45,8 @@ function Transcriptor() {
   return (
     <>
       <Convert />
-      <div className="main-container">
-        <div className="container">
+      <div className="container">
+        <div className="input-container">
           <InputTextArea />
           <div className="center">
             <div className="swap-position" onClick={swap}>
@@ -56,7 +57,7 @@ function Transcriptor() {
         </div>
       </div>
       {brailleBoard && <BrailleBoard />}
-      {kb && <Keyboard />}
+      {kb && <VKeyboard inLang={inLang} />}
     </>
   );
 }

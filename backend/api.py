@@ -1,4 +1,5 @@
 from braille_transcriptor.transcriptor import BrailleTranscriptor, strategies
+from braille_transcriptor.braille_alphabets import Dictionary
 from fastapi import FastAPI, File, UploadFile, Response, Body
 from fastapi.middleware.cors import CORSMiddleware
 import requests
@@ -34,11 +35,12 @@ app.add_middleware(
 )
 
 strategies = {
-    "en": {"strate": strategies.EglishStrategy, 'lang': "eng"},
-    "fr": {"strate": strategies.FrenchStrategy, 'lang': "fra"},
-    "ar": {"strate": strategies.ArabicStrategy, 'lang': "ara"},
+    "en": {"strate": strategies.EglishStrategy, 'lang': "eng", 'dict': Dictionary.English.value},
+    "fr": {"strate": strategies.FrenchStrategy, 'lang': "fra", 'dict': Dictionary.French.value},
+    "ar": {"strate": strategies.ArabicStrategy, 'lang': "ara", 'dict': Dictionary.Arabic.value},
     # add strategies here
 }
+
 
 transcript_options = [
     {
@@ -66,10 +68,10 @@ transcript_options = [
                 "name": "Grade 1",
                 "code": "1"
             },
-            # {
-            #     "name": "Grade 2",
-            #     "code": "2"
-            # }
+            {
+                "name": "Grade 2",
+                "code": "2"
+            }
         ],
     },
 
@@ -97,13 +99,12 @@ transcript_options = [
                 "name": "Grade 1",
                 "code": "1"
             },
-            # {
-            #     "name": "Grade 2",
-            #     "code": "2"
-            # }
+            {
+                "name": "Grade 2",
+                "code": "2"
+            }
         ],
     },
-
 ]
 
 translate_options = [
@@ -176,6 +177,12 @@ translate_options = [
     ],
 ]
 
+search_options = [
+    {'name': 'English', 'code': 'en'},
+    {'name': 'Arabic', 'code': 'ar'},
+    {'name': 'French', 'code': 'fr'}
+]
+
 
 def lang_exist(code, options):
     return any(option["code"] == code for option in options)
@@ -211,6 +218,7 @@ async def translate(text: str, source_lang: str, source_grade: str, target_lang:
     params = {"q": text, "langpair": f"{source_lang}|{target_lang}"}
     try:
         response = requests.get(url, params=params)
+        # print(response)
     except:
         return {"result": text}
 
@@ -252,3 +260,22 @@ async def getTranscribeOptions():
 @ app.get("/translate_options")
 async def getTranslateOptions():
     return translate_options
+
+
+@ app.post("/contraction_list")
+async def contraction_list(lang: str):
+    dictt = strategies[lang]['dict']
+    contractions = []
+    contractionslist = dictt.grade2_map[
+        'standalone'] | dictt.grade2_map['group_sign']
+
+    for item in dictt.grade2_map['standalone']:
+        contractions.append(
+            {"word": item, "contraction": contractionslist[item], "braille": BrailleTranscriptor(
+                strategy=strategies[lang]['strate'], grade=int("1")).to_braille(contractionslist[item])})
+    return contractions
+
+
+@ app.get("/search_options")
+async def searchOptions():
+    return search_options
