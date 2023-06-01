@@ -24,21 +24,23 @@ function Translator() {
   return (
     <>
       <ConvertTranslate />
-      <div>
-        <div className="container">
-          <div className="input-container">
-            <TranslInputTextArea />
-            <div className="center">
-              <div className="swap-position" onClick={swap}>
-                <ion-icon name="swap-horizontal-outline"></ion-icon>
+      <main>
+        <div>
+          <div className="container">
+            <div className="input-container">
+              <TranslInputTextArea />
+              <div className="center">
+                <div className="swap-position" onClick={swap}>
+                  <ion-icon name="swap-horizontal-outline"></ion-icon>
+                </div>
               </div>
+              <TranslOutputTextArea />
             </div>
-            <TranslOutputTextArea />
           </div>
         </div>
-      </div>
-      {brailleBoard && <BrailleBoard />}
-      {kb && <VKeyboard grade inLang={inTrans} />}
+        {brailleBoard && <BrailleBoard />}
+        {kb && <VKeyboard grade inLang={inTrans} />}
+      </main>
     </>
   );
 }

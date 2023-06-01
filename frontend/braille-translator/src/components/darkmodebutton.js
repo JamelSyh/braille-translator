@@ -23,9 +23,9 @@ function DarkModeButton() {
   }, [isDark]);
 
   return (
-    <label class="switch" >
+    <label className="switch" >
       <input id="checkbox" onClick={handleDarkMode} type="checkbox" />
-      <span class="slider"></span>
+      <span className="slider"></span>
     </label>
   )
 }

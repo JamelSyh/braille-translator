@@ -1,44 +1,57 @@
-import { useDispatch, useSelector } from "react-redux/es/exports";
-import { switchOption, switchLang, switchText, mobile } from "../redux/actions";
-import InputTextArea from '../components/inputTextArea';
-import OutputTextArea from '../components/outputTextArea';
-import ScanArea from "../components/scanArea";
-// import Keyboard from '../components/keyboard';
-// import BrailleBoard from '../components/brailleBoard';
-import '../App.css';
-import '../Scan.css';
+// import { useDispatch, useSelector } from "react-redux/es/exports";
+// import { switchOption, switchLang, switchText, mobile } from "../redux/actions";
+// import InputTextArea from '../components/inputTextArea';
+// import OutputTextArea from '../components/outputTextArea';
+// import ScanArea from "../components/scanArea";
+import { useDispatch } from "react-redux/es/exports";
+import { setTab } from "../redux/actions";
+import { Link } from "react-router-dom";
+import soonImg from "../images/soon.svg";
+import { useEffect } from 'react';
 
 function Scan() {
 
   const dispatch = useDispatch();
-  // const kb = useSelector(state => state.functions.keyboard);
-  // const brailleBoard = useSelector(state => state.functions.board);
 
-  // const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-
-  const swap = () => {
-    dispatch(switchOption());
-    dispatch(switchLang());
-    dispatch(switchText());
+  const handleSelect = () => {
+    dispatch(setTab(0));
   }
 
-  // useEffect(() => {
-  //   function handleResize() {
-  //     setScreenWidth(window.innerWidth);
-  //     if (screenWidth < 720) {
-  //       dispatch(mobile(true));
-  //     } else {
-  //       dispatch(mobile(false));
-  //     }
-  //   }
+  useEffect(() => {
 
-  // window.addEventListener('resize', handleResize);
-  // return () => window.removeEventListener('resize', handleResize);
+    const fadeFromTopElements = document.querySelectorAll('.fadeFromTop');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        entry.isIntersecting && entry.target.classList.add('fft-active');
+      });
+    });
+    fadeFromTopElements.forEach((el) => observer.observe(el));
 
-  // }, [screenWidth, dispatch]);
+    // Clean up the observers when the component unmounts
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
 
   return (
-    <></>
+    <>
+      <main>
+        <div className="overview nav-section" id="overview" style={{ marginTop: "5rem" }}>
+          <div className="overview-flex fadeFromTop">
+            <section className="overview-flex__text">
+              <h2>Coming Soon</h2>
+              <p>Exciting new features are on their way! Stay tuned as we bring you innovative enhancements to enhance your experience.</p>
+              {/* <a href="#" >Go to Homepage</a> */}
+              <Link className="overview-flex__text-link" alt=" dotwise logo" value="go homepage button" onClick={handleSelect} to={`/home`}>
+                Go to Homepage
+              </Link>
+            </section>
+            <img src={soonImg} height="500em" />
+          </div>
+        </div>
+
+      </main >
+    </>
   );
 }
 

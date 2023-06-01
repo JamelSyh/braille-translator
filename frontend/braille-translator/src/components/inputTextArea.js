@@ -81,16 +81,21 @@ function InputTextArea() {
       });
   };
 
-  const handleKeyPress = (e) => {
+  const handleKeyPress = (event) => {
     if (brailleMode) {
       if (outLang.code == "auto")
         dispatch(outputLang(outOpt[2]));
-      const newKey = brailleKeys[e.key.toLowerCase()];
+      const newKey = brailleKeys[event.key.toLowerCase()];
       if (newKey) {
         setKey(newKey);
         setBrailleInput(brailleInput + newKey)
       }
-      e.preventDefault();
+      if (event.ctrlKey || event.metaKey) {
+        event.stopPropagation();
+        // Allow Ctrl+.. (or Cmd+C on Mac)
+        return;
+      }
+      event.preventDefault();
     }
   };
 

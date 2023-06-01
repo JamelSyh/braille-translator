@@ -117,37 +117,39 @@ function Lookup() {
 
     <>
       <Search />
-      <div className="container">
-        <div className="lookup-container">
-          <div className="search-bar">
-            <input type="text" className="input" placeholder='search' value={inText} onChange={filterBySearch} onKeyDown={handleKeyPress} maxLength={20} />
-            <div class="flBtnCntr">
-              <button class="flBtnBox big">+</button>
-              <div class="flBtns">
-                <button class={`flBtnBox small ${listening ? 'active-float-btn' : ''}`} onClick={handleStartRecognition}>
-                  <Voice theme="outline" size="20" strokeWidth={3} />
-                </button>
-                <button class={`flBtnBox small ${kb ? 'active-float-btn' : ''}`} onClick={() => { dispatch(keyboard(!kb)); dispatch(board(false)); }}>
-                  <Keyboard size="20" strokeWidth={3} />
-                </button>
-                <button class={`flBtnBox small ${brailleBoard ? 'active-float-btn' : ''}`} onClick={() => { dispatch(board(!brailleBoard)); dispatch(keyboard(false)) }}>
-                  <ViewGridCard size="20" strokeWidth={3} />
+      <main>
+        <div className="container">
+          <div className="lookup-container">
+            <div className="search-bar">
+              <input type="text" className="input" placeholder='search' value={inText} onChange={filterBySearch} onKeyDown={handleKeyPress} maxLength={20} />
+              <div className="flBtnCntr">
+                <button className="flBtnBox big">+</button>
+                <div className="flBtns">
+                  <button className={`flBtnBox small ${listening ? 'active-float-btn' : ''}`} onClick={handleStartRecognition}>
+                    <Voice theme="outline" size="20" strokeWidth={3} />
+                  </button>
+                  <button className={`flBtnBox small ${kb ? 'active-float-btn' : ''}`} onClick={() => { dispatch(keyboard(!kb)); dispatch(board(false)); }}>
+                    <Keyboard size="20" strokeWidth={3} />
+                  </button>
+                  <button className={`flBtnBox small ${brailleBoard ? 'active-float-btn' : ''}`} onClick={() => { dispatch(board(!brailleBoard)); dispatch(keyboard(false)) }}>
+                    <ViewGridCard size="20" strokeWidth={3} />
 
-                </button>
-                <button class={`flBtnBox small ${brailleMode ? 'active-float-btn' : ''}`} onClick={() => { setBrailleMode(!brailleMode); }}>B</button>
+                  </button>
+                  <button className={`flBtnBox small ${brailleMode ? 'active-float-btn' : ''}`} onClick={() => { setBrailleMode(!brailleMode); }}>B</button>
+                </div>
+              </div>
+              <div className="lang-search">
+                <SearchDropdown />
               </div>
             </div>
-            <div className="lang-search">
-              <SearchDropdown />
+            {brailleBoard && <BrailleBoard />}
+            {kb && <div className="keyboard-container"><VKeyboard grade={brailleMode ?? null} inLang={lang} /> </div>}
+            <div className="result-container">
+              <Table data={filteredList} rowsPerPage={10} />
             </div>
           </div>
-          {brailleBoard && <BrailleBoard />}
-          {kb && <div class="keyboard-container"><VKeyboard grade={brailleMode ?? null} inLang={lang} /> </div>}
-          <div className="result-container">
-            <Table data={filteredList} rowsPerPage={10} />
-          </div>
-        </div>
-      </div >
+        </div >
+      </main>
     </>
   );
 }

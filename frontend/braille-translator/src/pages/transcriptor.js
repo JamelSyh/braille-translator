@@ -45,19 +45,21 @@ function Transcriptor() {
   return (
     <>
       <Convert />
-      <div className="container">
-        <div className="input-container">
-          <InputTextArea />
-          <div className="center">
-            <div className="swap-position" onClick={swap}>
-              <ion-icon name="swap-horizontal-outline"></ion-icon>
+      <main>
+        <div className="container">
+          <div className="input-container">
+            <InputTextArea />
+            <div className="center">
+              <div className="swap-position" onClick={swap}>
+                <ion-icon name="swap-horizontal-outline"></ion-icon>
+              </div>
             </div>
+            <OutputTextArea />
           </div>
-          <OutputTextArea />
         </div>
-      </div>
-      {brailleBoard && <BrailleBoard />}
-      {kb && <VKeyboard inLang={inLang} />}
+        {brailleBoard && <BrailleBoard />}
+        {kb && <VKeyboard inLang={inLang} />}
+      </main>
     </>
   );
 }

@@ -1,7 +1,7 @@
 {
   "name": "braille-translator",
   "version": "0.1.0",
-  "homepage": "https://JamelSyh.github.io/braille-translator",
+  "homepage": "https://JamelSyh.github.io",
   "private": true,
   "dependencies": {
     "@icon-park/react": "^1.4.2",
