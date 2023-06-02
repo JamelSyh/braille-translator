@@ -1,0 +1,6 @@
+fastapi==0.68.1
+pytesseract==0.3.8
+Pillow==8.3.2
+uvicorn==0.15.0
+pyahocorasick==2.0.0
+requests==2.31.0
