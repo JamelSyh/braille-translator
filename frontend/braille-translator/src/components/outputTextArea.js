@@ -16,7 +16,7 @@ function OutputTextArea() {
   const inOpt = useSelector(state => state.options.inOpt);
   const outOpt = useSelector(state => state.options.outOpt);
   const pending = useSelector(state => state.text.pending);
-  const url = "https://dotwise-backend.onrender.com";
+  const url = "https://braille-translator-production.up.railway.app";
 
 
   const copyToClipboard = () => {

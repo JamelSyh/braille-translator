@@ -21,7 +21,7 @@ function InputTextArea() {
   const outOpt = useSelector(state => state.options.outOpt);
   const kb = useSelector(state => state.functions.keyboard);
   const brailleBoard = useSelector(state => state.functions.board);
-  const url = "https://dotwise-backend.onrender.com";
+  const url = "https://braille-translator-production.up.railway.app";
   // const pend = useSelector(state => state.text.pending);
 
   const [selectedFile, setSelectedFile] = useState(null);
