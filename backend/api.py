@@ -20,7 +20,7 @@ params = {
 }
 headers = {
     "Content-Type": "application/json",
-    'referer': 'http://localhost:8000'
+    'referer': 'https://dotwize.vercel.app'
 }
 
 
