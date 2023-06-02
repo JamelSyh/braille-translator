@@ -29,7 +29,9 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["https://dotwize-git-main-jamelsyh.vercel.app",
-                   'https://braille-translator-production.up.railway.app'],
+                   'https://braille-translator-production.up.railway.app',
+                   "https://dotwise.online",
+                   ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -56,7 +58,7 @@ transcript_options = [
             {
                     "name": "Grade 2",
                     "code": "2"
-            }
+                    }
         ],
     },
 
