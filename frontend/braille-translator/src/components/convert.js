@@ -13,6 +13,7 @@ function Convert() {
   const inLang = useSelector(state => state.language.inLang);
   const outLang = useSelector(state => state.language.outLang);
   const options = useSelector(state => state.options.inOpt);
+  const url = "https://dotwise-backend.onrender.com";
 
   const [debouncedText, setDebouncedText] = useState(inText);
 
@@ -27,7 +28,7 @@ function Convert() {
 
   useEffect(() => {
     const getOptions = async () => {
-      const { data } = await axios.get('http://localhost:8000/transcript_options', {}, {
+      const { data } = await axios.get(`${url}/transcript_options`, {}, {
       });
       if (data) {
         dispatch(inputOptions(data));
@@ -64,7 +65,7 @@ function Convert() {
   useEffect(() => {
 
     const Transcoding = async () => {
-      const { data } = await axios.post('http://localhost:8000/transcriptor', {}, {
+      const { data } = await axios.post(`${url}/transcriptor`, {}, {
         params: {
           text: debouncedText,
           source: inLang.code,

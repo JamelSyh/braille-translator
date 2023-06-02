@@ -12,11 +12,12 @@ function Search() {
   const inText = useSelector(state => state.text.inputText);
   const lang = useSelector(state => state.search.lang);
   const langOpt = useSelector(state => state.search.langOpt);
+  const url = "https://dotwise-backend.onrender.com";
 
 
   useEffect(() => {
     const getOptions = async () => {
-      const { data } = await axios.get('http://localhost:8000/search_options', {}, {
+      const { data } = await axios.get(`${url}/search_options`, {}, {
       });
       if (data) {
         dispatch(searchLangOptions(data));
@@ -28,7 +29,7 @@ function Search() {
   useEffect(() => {
     const getSearchData = async () => {
       // const { data } = await axios.get('http://localhost:8000/contraction_list', {}, {
-      const { data } = await axios.post('http://localhost:8000/contraction_list', {}, {
+      const { data } = await axios.post(`${url}/contraction_list`, {}, {
         params: {
           lang: lang.code,
         }

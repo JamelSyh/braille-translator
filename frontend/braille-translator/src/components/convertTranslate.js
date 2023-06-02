@@ -13,6 +13,7 @@ function ConvertTranslate() {
   const inLang = useSelector(state => state.language.inLang);
   const inTrans = useSelector(state => state.language.inTrans);
   const outTrans = useSelector(state => state.language.outTrans);
+  const url = "https://dotwise-backend.onrender.com";
 
   const [debouncedText, setDebouncedText] = useState(inText);
 
@@ -28,7 +29,7 @@ function ConvertTranslate() {
 
   useEffect(() => {
     const getOptions = async () => {
-      const { data } = await axios.get('http://localhost:8000/translate_options', {}, {
+      const { data } = await axios.get(`${url}/translate_options`, {}, {
       });
       if (data) {
         dispatch(inputTransOptions(data));
@@ -49,7 +50,7 @@ function ConvertTranslate() {
 
   useEffect(() => {
     const Transcoding = async () => {
-      const { data } = await axios.post('http://localhost:8000/translator', {}, {
+      const { data } = await axios.post(`${url}/translator`, {}, {
         params: {
           text: debouncedText,
           source_lang: inTrans[0].code,
