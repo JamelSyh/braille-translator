@@ -16,6 +16,7 @@ function TranslOutputTextArea() {
   const outTransOpt = useSelector(state => state.options.outTransOpt);
   const inLang = useSelector(state => state.language.inLang);
   const pending = useSelector(state => state.text.pending);
+  const url = "https://dotwise-backend.onrender.com";
 
 
   const copyToClipboard = () => {
@@ -23,7 +24,7 @@ function TranslOutputTextArea() {
   }
 
   const handleDownload = async () => {
-    const response = await fetch(`http://localhost:8000/downloadfile/?braille=${outText}`);
+    const response = await fetch(`${url}/downloadfile/?braille=${outText}`);
     const blob = await response.blob();
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement("a");

@@ -16,6 +16,7 @@ function OutputTextArea() {
   const inOpt = useSelector(state => state.options.inOpt);
   const outOpt = useSelector(state => state.options.outOpt);
   const pending = useSelector(state => state.text.pending);
+  const url = "https://dotwise-backend.onrender.com";
 
 
   const copyToClipboard = () => {
@@ -23,7 +24,7 @@ function OutputTextArea() {
   }
 
   const handleDownload = async () => {
-    const response = await fetch(`http://localhost:8000/downloadfile/?braille=${outText}`);
+    const response = await fetch(`${url}/downloadfile/?braille=${outText}`);
     const blob = await response.blob();
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement("a");

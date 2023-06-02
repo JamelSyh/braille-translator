@@ -21,6 +21,7 @@ function InputTextArea() {
   const outOpt = useSelector(state => state.options.outOpt);
   const kb = useSelector(state => state.functions.keyboard);
   const brailleBoard = useSelector(state => state.functions.board);
+  const url = "https://dotwise-backend.onrender.com";
   // const pend = useSelector(state => state.text.pending);
 
   const [selectedFile, setSelectedFile] = useState(null);
@@ -68,7 +69,7 @@ function InputTextArea() {
     const formData = new FormData();
     formData.append("file", selectedFile);
     await axios
-      .post("http://localhost:8000/uploadfile", formData, {
+      .post(`${url}/uploadfile`, formData, {
         params: {
           lang: inLang.code
         }

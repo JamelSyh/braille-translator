@@ -35,9 +35,9 @@ app.add_middleware(
 )
 
 strategies = {
-    "en": {"strate": strategies.EglishStrategy, 'lang': "eng", 'dict': Dictionary.English.value},
-    "fr": {"strate": strategies.FrenchStrategy, 'lang': "fra", 'dict': Dictionary.French.value},
-    "ar": {"strate": strategies.ArabicStrategy, 'lang': "ara", 'dict': Dictionary.Arabic.value},
+    "en": {"strate": strategies.EglishStrategy, 'lang': "eng", 'dictionary': Dictionary.English.value},
+    "fr": {"strate": strategies.FrenchStrategy, 'lang': "fra", 'dictionary': Dictionary.French.value},
+    "ar": {"strate": strategies.ArabicStrategy, 'lang': "ara", 'dictionary': Dictionary.Arabic.value},
     # add strategies here
 }
 
@@ -264,7 +264,7 @@ async def getTranslateOptions():
 
 @ app.post("/contraction_list")
 async def contraction_list(lang: str):
-    dictt = strategies[lang]['dict']
+    dictt = strategies[lang]['dictionary']
     contractions = []
     contractionslist = dictt.grade2_map[
         'standalone'] | dictt.grade2_map['group_sign']
