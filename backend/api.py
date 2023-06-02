@@ -20,7 +20,7 @@ params = {
 }
 headers = {
     "Content-Type": "application/json",
-    'referer': 'https://dotwize.vercel.app'
+    'referer': 'https://dotwise.online'
 }
 
 
