@@ -20,7 +20,7 @@ params = {
 }
 headers = {
     "Content-Type": "application/json",
-    'referer': 'https://dotwise.online'
+    'referer': 'https://dotwize-git-main-jamelsyh.vercel.app'
 }
 
 
@@ -28,7 +28,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["https://dotwize-git-main-jamelsyh.vercel.app"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
