@@ -110,9 +110,7 @@ class EnglishStrategy(Strategy):
                 new_word = self.number_encoder(word)
                 new_word = self.capital_encoder(new_word)
                 result = ""
-                # braille_dict = self.grade1_map['alpha'] | self.grade1_map['char']
-                braille_dict = {
-                    **self.grade1_map['alpha'], **self.grade1_map['char']}
+                braille_dict = self.grade1_map['alpha'] | self.grade1_map['char']
                 for i in range(len(new_word)):
                     main = new_word[i]
 
@@ -175,9 +173,7 @@ class EnglishStrategy(Strategy):
 
             braille_words = braille.split(self.grade1_map['char'][" "])
             final_braille = ""
-            # braille_dict = self.grade1_map['alpha'] | self.grade1_map['char']
-            braille_dict = {
-                **self.grade1_map['alpha'], **self.grade1_map['char']}
+            braille_dict = self.grade1_map['alpha'] | self.grade1_map['char']
             # swap the dictionary
             swaped_dict = {v: k for k, v in braille_dict.items()}
 
@@ -293,10 +289,7 @@ class EnglishStrategy(Strategy):
                 new_word = self.capital_encoder(new_word)
                 new_word = self.contraction_encoder(new_word)
                 result = ""
-                # braille_dict = self.grade2_map['alpha'] | self.grade2_map['char']
-                braille_dict = {
-                    **self.grade2_map['alpha'], **self.grade2_map['char']}
-
+                braille_dict = self.grade2_map['alpha'] | self.grade2_map['char']
                 for i in range(len(new_word)):
                     main = new_word[i]
 
@@ -418,10 +411,7 @@ class EnglishStrategy(Strategy):
         def from_braille(self, braille):
 
             braille_words = braille.split(self.grade2_map['char'][" "])
-            # braille_dict = self.grade2_map['alpha'] | self.grade2_map['char']
-            braille_dict = {
-                **self.grade2_map['alpha'], **self.grade2_map['char']}
-
+            braille_dict = self.grade2_map['alpha'] | self.grade2_map['char']
             # swap the dictionary
             swaped_dict = {v: k for k, v in braille_dict.items()}
             result = ""
