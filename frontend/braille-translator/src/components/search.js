@@ -12,7 +12,7 @@ function Search() {
   const inText = useSelector(state => state.text.inputText);
   const lang = useSelector(state => state.search.lang);
   const langOpt = useSelector(state => state.search.langOpt);
-  const url = "http://braille-translator-production.up.railway.app";
+  const url = "https://braille-translator-production.up.railway.app";
 
 
   useEffect(() => {
