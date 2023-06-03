@@ -38,8 +38,34 @@ function Convert() {
     getOptions();
   }, [dispatch]);
 
+  const doDetection = async () => {
+    try {
+      if (inLang.code === "auto" && debouncedText !== "") {
+        const { data } = await axios.post('https://translation.googleapis.com/language/translate/v2/detect', {}, {
+          params: {
+            q: debouncedText
+          },
+          headers: {
+            referer: "localhost:3000"
+          },
+          paramsSerializer: params => {
+            const serializedParams = qs.stringify(params);
+            return `${serializedParams}&key=AIzaSyCHUCmpR7cT_yDFHC98CZJy2LTms-IwDlM`; // Replace YOUR_API_KEY with your actual API key
+          }
+        });
+        options.forEach((option) => {
+          if (option.code === data.data.detections[0][0].language) {
+            dispatch(inputLang(option));
+          }
+        });
+      }
+    } catch (e) {
+      dispatch(inputLang(options[2]));
+    }
+  }
 
   useEffect(() => {
+
     const doDetection = async () => {
       try {
         if (inLang.code === "auto" && debouncedText !== "") {
