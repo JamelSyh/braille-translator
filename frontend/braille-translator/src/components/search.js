@@ -12,7 +12,7 @@ function Search() {
   const inText = useSelector(state => state.text.inputText);
   const lang = useSelector(state => state.search.lang);
   const langOpt = useSelector(state => state.search.langOpt);
-  const url = "https://braille-1-d9412035.deta.app";
+  const url = useSelector(state => state.backend.url);
 
 
   useEffect(() => {

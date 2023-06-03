@@ -6,6 +6,7 @@ import textReducer from "./textReducer";
 import functionsReducer from "./functionsReducer";
 import tabReducer from "./tabReducer";
 import searchReducer from "./searchReducer";
+import backendReducer from "./backendReducer";
 
 export const reducers = combineReducers({
   options: optionsReducer,
@@ -15,5 +16,6 @@ export const reducers = combineReducers({
   functions: functionsReducer,
   tab: tabReducer,
   search: searchReducer,
+  backend: backendReducer,
 });
 

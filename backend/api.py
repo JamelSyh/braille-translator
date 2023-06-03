@@ -9,33 +9,11 @@ from typing import Dict
 import pytesseract
 from PIL import Image
 
-key = "AIzaSyCHUCmpR7cT_yDFHC98CZJy2LTms-IwDlM"
-
-url = "https://translation.googleapis.com/language/translate/v2"
-params = {
-    "q": "Hello, world!",
-    "target": "es",
-    "source": "en",
-    "key": key
-}
-headers = {
-    "Content-Type": "application/json",
-    'referer': 'https://dotwise.online'
-}
-
-
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://braille-1-d9412035.deta.app",
-                   "https://fantastic-valkyrie-188bfb.netlify.app",
-                   "https://dotwize-git-main-jamelsyh.vercel.app",
-                   "https://dotwize-cdpoh5w6v-jamelsyh.vercel.app",
-                   "https://dotwize-jamelsyh.vercel.app",
-                   "https://dotwize-git-main-jamelsyh.vercel.app",
-                   "https://www.dotwise.online",
-                   "https://dotwise.vercel.app/",
+    allow_origins=["*"
                    ],
     allow_credentials=True,
     allow_methods=["*"],

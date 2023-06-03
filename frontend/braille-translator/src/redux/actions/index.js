@@ -1,4 +1,10 @@
 
+export const backendUrl = (url = []) => {
+  return {
+    type: "BACKEND_URL",
+    payload: { url: url }
+  }
+}
 
 export const inputOptions = (inOpt = []) => {
   return {

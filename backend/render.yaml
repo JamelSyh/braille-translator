@@ -1,2 +1,0 @@
-buildCommand: pip install -r requirements.txt
-pythonVersion: 3.10.6

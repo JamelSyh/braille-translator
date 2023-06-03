@@ -13,7 +13,7 @@ function ConvertTranslate() {
   const inLang = useSelector(state => state.language.inLang);
   const inTrans = useSelector(state => state.language.inTrans);
   const outTrans = useSelector(state => state.language.outTrans);
-  const url = "https://braille-1-d9412035.deta.app";
+  const url = useSelector(state => state.backend.url);
 
   const [debouncedText, setDebouncedText] = useState(inText);
 

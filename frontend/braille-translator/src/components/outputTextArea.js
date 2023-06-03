@@ -16,7 +16,7 @@ function OutputTextArea() {
   const inOpt = useSelector(state => state.options.inOpt);
   const outOpt = useSelector(state => state.options.outOpt);
   const pending = useSelector(state => state.text.pending);
-  const url = "https://braille-1-d9412035.deta.app";
+  const url = useSelector(state => state.backend.url);
 
 
   const copyToClipboard = () => {

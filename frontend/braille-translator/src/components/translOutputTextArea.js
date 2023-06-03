@@ -16,7 +16,7 @@ function TranslOutputTextArea() {
   const outTransOpt = useSelector(state => state.options.outTransOpt);
   const inLang = useSelector(state => state.language.inLang);
   const pending = useSelector(state => state.text.pending);
-  const url = "https://braille-1-d9412035.deta.app";
+  const url = useSelector(state => state.backend.url);
 
 
   const copyToClipboard = () => {

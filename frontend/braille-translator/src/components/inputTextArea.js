@@ -21,7 +21,7 @@ function InputTextArea() {
   const outOpt = useSelector(state => state.options.outOpt);
   const kb = useSelector(state => state.functions.keyboard);
   const brailleBoard = useSelector(state => state.functions.board);
-  const url = "https://braille-1-d9412035.deta.app";
+  const url = useSelector(state => state.backend.url);
   // const pend = useSelector(state => state.text.pending);
 
   const [selectedFile, setSelectedFile] = useState(null);

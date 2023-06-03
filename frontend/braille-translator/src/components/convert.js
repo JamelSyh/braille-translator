@@ -13,7 +13,7 @@ function Convert() {
   const inLang = useSelector(state => state.language.inLang);
   const outLang = useSelector(state => state.language.outLang);
   const options = useSelector(state => state.options.inOpt);
-  const url = "https://braille-1-d9412035.deta.app";
+  const url = useSelector(state => state.backend.url);
 
   const [debouncedText, setDebouncedText] = useState(inText);
 
