@@ -5,6 +5,11 @@ micros:
     src: ./
     engine: python3.9
     primary: true
-    run: uvicorn api:app --host 0.0.0.0 --port $PORT
+    run: uvicorn main:app --host 0.0.0.0 --port $PORT
     public_routes:
       - "/*"
+    presets:
+      env:
+        - name: ENV_API_KEY
+          description: Secret message only available to this Micro
+          default: ""

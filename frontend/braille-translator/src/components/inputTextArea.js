@@ -21,8 +21,8 @@ function InputTextArea() {
   const outOpt = useSelector(state => state.options.outOpt);
   const kb = useSelector(state => state.functions.keyboard);
   const brailleBoard = useSelector(state => state.functions.board);
-  const url = useSelector(state => state.backend.url);
-  // const pend = useSelector(state => state.text.pending);
+  const dotwise_api_key = useSelector(state => state.backend.dotwiseApiKey);
+  const ocr_api_key = useSelector(state => state.backend.ocrApiKey);
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [brailleMode, setBrailleMode] = useState(false);
@@ -39,6 +39,11 @@ function InputTextArea() {
     'en': 'en-US',
     'fr': 'fr-FR',
     'ar': 'ar-SA'
+  }
+  const OCRLangList = {
+    'en': 'eng',
+    'fr': 'fre',
+    'ar': 'ara',
   }
   const { transcript, resetTranscript, listening } = useSpeechRecognition();
 
@@ -62,24 +67,31 @@ function InputTextArea() {
     setSelectedFile(event.target.files[0]);
   };
 
+  const uploadFile = async (file, lang, key) => {
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('apikey', ocr_api_key);
+      formData.append('language', OCRLangList[lang]);
+
+      const response = await axios.post(`https://api.ocr.space/parse/image/`, formData, {
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      throw error;
+    }
+  };
+
   const handleUpload = async () => {
     if (inLang.code === "auto") {
       dispatch(inputLang(inOpt[2]));
+      return;
     }
-    const formData = new FormData();
-    formData.append("file", selectedFile);
-    await axios
-      .post(`${url}/uploadfile`, formData, {
-        params: {
-          lang: inLang.code
-        }
-      })
-      .then((response) => {
-        dispatch(inputText(response.data.text));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const response = await uploadFile(selectedFile, inLang.code, dotwise_api_key);
+    if (response) {
+      dispatch(inputText(response.ParsedResults[0].ParsedText))
+    }
   };
 
   const handleKeyPress = (event) => {

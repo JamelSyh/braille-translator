@@ -14,6 +14,7 @@ function ConvertTranslate() {
   const inTrans = useSelector(state => state.language.inTrans);
   const outTrans = useSelector(state => state.language.outTrans);
   const url = useSelector(state => state.backend.url);
+  const dotwise_api_key = useSelector(state => state.backend.dotwiseApiKey);
 
   const [debouncedText, setDebouncedText] = useState(inText);
 
@@ -29,19 +30,26 @@ function ConvertTranslate() {
 
   useEffect(() => {
     const getOptions = async () => {
-      const { data } = await axios.get(`${url}/translate_options`, {}, {
-      });
-      if (data) {
-        dispatch(inputTransOptions(data));
-        dispatch(outputTransOptions(data));
-        dispatch(inputTransLang(data[0]));
-        dispatch(outputTransLang(data[1]));
+      try {
+        const { data } = await axios.get(`${url}/translate_options`, {
+          params: {
+            key: dotwise_api_key,
+          }
+        });
+        if (data) {
+          dispatch(inputTransOptions(data));
+          dispatch(outputTransOptions(data));
+          dispatch(inputTransLang(data[0]));
+          dispatch(outputTransLang(data[1]));
 
-        if (inLang.code !== "1" && inLang.code !== "2") {
-          dispatch(inputText(outText));
-        } else {
-          dispatch(inputText(inText));
+          if (inLang.code !== "1" && inLang.code !== "2") {
+            dispatch(inputText(outText));
+          } else {
+            dispatch(inputText(inText));
+          }
         }
+      } catch (error) {
+        console.log("error at fteching options: ", error);
       }
     };
     getOptions();
@@ -50,26 +58,31 @@ function ConvertTranslate() {
 
   useEffect(() => {
     const Transcoding = async () => {
-      const { data } = await axios.post(`${url}/translator`, {}, {
-        params: {
-          text: debouncedText,
-          source_lang: inTrans[0].code,
-          source_grade: inTrans[0].grade.code,
-          target_lang: outTrans[0].code,
-          target_grade: outTrans[0].grade.code
+      try {
+        const { data } = await axios.post(`${url}/translator`, {}, {
+          params: {
+            text: debouncedText,
+            source_lang: inTrans[0].code,
+            source_grade: inTrans[0].grade.code,
+            target_lang: outTrans[0].code,
+            target_grade: outTrans[0].grade.code,
+            key: dotwise_api_key,
+          }
+        });
+        if (data) {
+          if (debouncedText !== "" && data.result)
+            dispatch(outputText(data.result));
+          else
+            dispatch(outputText(""));
+
         }
-      });
-      if (data) {
-        if (debouncedText !== "" && data.result)
-          dispatch(outputText(data.result));
-        else
+        if (debouncedText === "")
           dispatch(outputText(""));
 
+        dispatch(pending(false));
+      } catch (error) {
+        console.log("error at transalting: ", error);
       }
-      if (debouncedText === "")
-        dispatch(outputText(""));
-
-      dispatch(pending(false));
     };
     Transcoding();
   }, [debouncedText, inText, inTrans, outTrans, dispatch]);

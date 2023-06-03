@@ -17,6 +17,7 @@ function TranslOutputTextArea() {
   const inLang = useSelector(state => state.language.inLang);
   const pending = useSelector(state => state.text.pending);
   const url = useSelector(state => state.backend.url);
+  const dotwise_api_key = useSelector(state => state.backend.dotwiseApiKey);
 
 
   const copyToClipboard = () => {
@@ -24,16 +25,16 @@ function TranslOutputTextArea() {
   }
 
   const handleDownload = async () => {
-    const response = await fetch(`${url}/downloadfile/?braille=${outText}`);
+    const response = await fetch(`${url}/downloadfile/?braille=${outText}&key=${dotwise_api_key}`);
     const blob = await response.blob();
-    const url = window.URL.createObjectURL(blob);
+    const tempUrl = window.URL.createObjectURL(blob);
     const link = document.createElement("a");
-    link.href = url;
+    link.href = tempUrl;
     link.download = "braille.brf";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    window.URL.revokeObjectURL(url);
+    window.URL.revokeObjectURL(tempUrl);
   };
 
 

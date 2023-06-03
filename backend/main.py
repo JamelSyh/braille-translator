@@ -1,13 +1,17 @@
 from braille_transcriptor.transcriptor import BrailleTranscriptor, strategies
 from braille_transcriptor.braille_alphabets import Dictionary
-from fastapi import FastAPI, File, UploadFile, Response, Body
+from fastapi import FastAPI, HTTPException, Security, File, UploadFile, Response
+from fastapi.security import APIKeyHeader
 from fastapi.middleware.cors import CORSMiddleware
 import requests
+import os
 from pydantic import BaseModel
 from typing import Dict
 
-import pytesseract
-from PIL import Image
+# from dotenv import load_dotenv
+
+# Load environment variables from .env file
+# load_dotenv()
 
 app = FastAPI()
 
@@ -19,6 +23,19 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+env_api_key = os.environ.get("ENV_API_KEY")
+
+API_KEY_NAME = "X-API-Key"
+api_key_scheme = APIKeyHeader(name=API_KEY_NAME)
+
+
+# Validate API Key
+def validate_api_key(api_key: str = Security(api_key_scheme)):
+    # Check if the api_key is valid and matches your expected value
+    if api_key != env_api_key:
+        raise HTTPException(status_code=403, detail="Invalid API key")
+
 
 strategies = {
     "en": {"strate": strategies.EglishStrategy, 'lang': "eng", 'dictionary': Dictionary.English.value},
@@ -41,7 +58,7 @@ transcript_options = [
             {
                     "name": "Grade 2",
                     "code": "2"
-                    }
+            }
         ],
     },
 
@@ -181,8 +198,8 @@ def grade_exist(code, lang, options):
 
 
 @ app.post("/transcriptor/")
-async def transcript(text: str, source: str, target: str):
-
+async def transcript(text: str, source: str, target: str, key: str = ""):
+    validate_api_key(key)
     if (source == "auto" or target == "auto"):
         return
     if (lang_exist(source, transcript_options)):
@@ -196,7 +213,8 @@ async def transcript(text: str, source: str, target: str):
 
 
 @app.post("/translator/")
-async def translate(text: str, source_lang: str, source_grade: str, target_lang: str, target_grade: str):
+async def translate(text: str, source_lang: str, source_grade: str, target_lang: str, target_grade: str, key: str = ""):
+    validate_api_key(key)
     transcriptor = BrailleTranscriptor(
         strategy=strategies[source_lang]['strate'], grade=int(source_grade))
     text = transcriptor.from_braille(text)
@@ -218,19 +236,21 @@ async def translate(text: str, source_lang: str, source_grade: str, target_lang:
         return
 
 
-@ app.post("/uploadfile/")
-async def create_upload_file(file: UploadFile = File(...), lang: str = "eng"):
-    if lang == "auto":
-        return
-    tessLang = strategies[lang]['lang']
-    with Image.open(file.file) as img:
-        text = pytesseract.image_to_string(img, lang=tessLang)
-        printable_text = text[:-1]
-    return {"text": printable_text}
+# @ app.post("/uploadfile/")
+# async def create_upload_file(file: UploadFile = File(...), lang: str = "en", key: str = ""):
+#     validate_api_key(key)
+#     if lang == "auto":
+#         return
+#     tessLang = strategies[lang]['lang']
+#     with Image.open(file.file) as img:
+#         text = pytesseract.image_to_string(img, lang=tessLang)
+#         printable_text = text[:-1]
+#     return {"text": printable_text}
 
 
 @ app.get("/downloadfile/")
-async def download_file(braille: str):
+async def download_file(braille: str, key: str = ""):
+    validate_api_key(key)
     file_contents = braille
     response = Response(content=file_contents)
     response.headers["Content-Disposition"] = "attachment; filename=braille.brf"
@@ -239,17 +259,20 @@ async def download_file(braille: str):
 
 
 @ app.get("/transcript_options")
-async def getTranscribeOptions():
+async def getTranscribeOptions(key: str = ""):
+    validate_api_key(key)
     return transcript_options
 
 
 @ app.get("/translate_options")
-async def getTranslateOptions():
+async def getTranslateOptions(key: str = ""):
+    validate_api_key(key)
     return translate_options
 
 
 @ app.post("/contraction_list")
-async def contraction_list(lang: str):
+async def contraction_list(lang: str, key: str = ""):
+    validate_api_key(key)
     dictt = strategies[lang]['dictionary']
     contractions = []
     contractionslist = dictt.grade2_map[
@@ -263,5 +286,6 @@ async def contraction_list(lang: str):
 
 
 @ app.get("/search_options")
-async def searchOptions():
+async def searchOptions(key: str = ""):
+    validate_api_key(key)
     return search_options

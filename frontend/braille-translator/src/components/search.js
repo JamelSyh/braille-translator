@@ -9,34 +9,47 @@ function Search() {
 
 
   const dispatch = useDispatch();
-  const inText = useSelector(state => state.text.inputText);
   const lang = useSelector(state => state.search.lang);
-  const langOpt = useSelector(state => state.search.langOpt);
   const url = useSelector(state => state.backend.url);
+  const dotwise_api_key = useSelector(state => state.backend.dotwiseApiKey);
 
 
   useEffect(() => {
     const getOptions = async () => {
-      const { data } = await axios.get(`${url}/search_options`, {}, {
-      });
-      if (data) {
-        dispatch(searchLangOptions(data));
+      try {
+        const { data } = await axios.get(`${url}/search_options`, {
+          params: {
+            key: dotwise_api_key,
+          },
+        });
+
+        if (data) {
+          dispatch(searchLangOptions(data));
+        }
+      } catch (error) {
+        console.error('Error fetching options:', error);
       }
     };
     getOptions();
   }, [dispatch]);
 
   useEffect(() => {
+
     const getSearchData = async () => {
-      const { data } = await axios.post(`${url}/contraction_list`, {}, {
-        params: {
-          lang: lang.code,
+      try {
+        const { data } = await axios.post(`${url}/contraction_list`, {}, {
+          params: {
+            lang: lang.code,
+            key: dotwise_api_key,
+          }
+        });
+        if (data) {
+          dispatch(searchData(data))
+          // dispatch(inputOptions(data));
+          // dispatch(outputOptions(data[0]['grade']));
         }
-      });
-      if (data) {
-        dispatch(searchData(data))
-        // dispatch(inputOptions(data));
-        // dispatch(outputOptions(data[0]['grade']));
+      } catch (error) {
+        console.error('Error at contraction list :', error);
       }
     };
     getSearchData();

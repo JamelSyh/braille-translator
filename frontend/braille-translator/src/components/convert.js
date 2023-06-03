@@ -14,6 +14,8 @@ function Convert() {
   const outLang = useSelector(state => state.language.outLang);
   const options = useSelector(state => state.options.inOpt);
   const url = useSelector(state => state.backend.url);
+  const dotwise_api_key = useSelector(state => state.backend.dotwiseApiKey);
+  const detectlang_api_key = useSelector(state => state.backend.detectlangApiKey);
 
   const [debouncedText, setDebouncedText] = useState(inText);
 
@@ -28,42 +30,46 @@ function Convert() {
 
   useEffect(() => {
     const getOptions = async () => {
-      const { data } = await axios.get(`${url}/transcript_options`, {}, {
-      });
-      if (data) {
-        dispatch(inputOptions(data));
-        dispatch(outputOptions(data[0]['grade']));
+      try {
+        const { data } = await axios.get(`${url}/transcript_options`, {
+          params: {
+            key: dotwise_api_key,
+          },
+        },);
+        if (data) {
+          dispatch(inputOptions(data));
+          dispatch(outputOptions(data[0]['grade']));
+        }
+      } catch (error) {
+        console.error('Error fetching options:', error);
+
       }
     };
+
     getOptions();
   }, [dispatch]);
-
 
   useEffect(() => {
 
     const doDetection = async () => {
       try {
         if (inLang.code === "auto" && debouncedText !== "") {
-          const { data } = await axios.post(
-            'https://translation.googleapis.com/language/translate/v2/detect',
-            {},
+          const response = await axios.post(
+            'https://ws.detectlanguage.com/0.2/detect',
+            { q: debouncedText },
             {
-              // headers: {
-              //   referer: "http://localhost:3000",
-              //   'content-type': 'application/json,',
-              // },
-              params: {
-                q: debouncedText,
-                key: "AIzaSyCHUCmpR7cT_yDFHC98CZJy2LTms-IwDlM"
-              }
+              headers: {
+                Authorization: `Bearer ${detectlang_api_key}`,
+              },
             }
           );
 
-          options.forEach((option) => {
-            if (option.code === data.data.detections[0][0].language) {
-              dispatch(inputLang(option));
-            }
-          });
+          if (response)
+            options.forEach((option) => {
+              if (option.code === response.data.data.detections[0].language) {
+                dispatch(inputLang(option));
+              }
+            });
         }
       } catch (error) {
         dispatch(inputLang(options[2]));
@@ -75,19 +81,23 @@ function Convert() {
   useEffect(() => {
 
     const Transcoding = async () => {
-      const { data } = await axios.post(`${url}/transcriptor`, {}, {
-        params: {
-          text: debouncedText,
-          source: inLang.code,
-          target: outLang.code,
+      try {
+        const { data } = await axios.post(`${url}/transcriptor`, {}, {
+          params: {
+            text: debouncedText,
+            source: inLang.code,
+            target: outLang.code,
+            key: dotwise_api_key,
+          }
+        });
+        if (data) {
+          if (debouncedText !== "" && data.result)
+            dispatch(outputText(data.result));
+          else
+            dispatch(outputText(""));
         }
-      });
-      if (data) {
-        if (debouncedText !== "" && data.result)
-          dispatch(outputText(data.result));
-        else
-          dispatch(outputText(""));
-
+      } catch (error) {
+        console.error('Error transcribing :', error);
       }
       dispatch(pending(false));
     };
