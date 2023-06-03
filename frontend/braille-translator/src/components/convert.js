@@ -48,9 +48,10 @@ function Convert() {
             'https://translation.googleapis.com/language/translate/v2/detect',
             {},
             {
-              headers: {
-                referer: "localhost:3000"
-              },
+              // headers: {
+              //   referer: "http://localhost:3000",
+              //   'content-type': 'application/json,',
+              // },
               params: {
                 q: debouncedText,
                 key: "AIzaSyCHUCmpR7cT_yDFHC98CZJy2LTms-IwDlM"

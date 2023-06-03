@@ -121,7 +121,7 @@ function Lookup() {
         <div className="container">
           <div className="lookup-container">
             <div className="search-bar">
-              <input type="text" className="input" placeholder='search' value={inText} onChange={filterBySearch} onKeyDown={handleKeyPress} maxLength={20} />
+              <input type="text" className="input" placeholder='search' value={inText} onChange={filterBySearch} onKeyUp={filterBySearch} onKeyDown={handleKeyPress} maxLength={20} />
               <div className="flBtnCntr">
                 <button className="flBtnBox big">+</button>
                 <div className="flBtns">
