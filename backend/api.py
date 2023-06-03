@@ -28,8 +28,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://braille-translator-production.up.railway.app",
-                   # "braille-translator-production.up.railway.app",
+    allow_origins=["https://braille-1-d9412035.deta.app",
                    "https://dotwize-git-main-jamelsyh.vercel.app",
                    "https://dotwize-cdpoh5w6v-jamelsyh.vercel.app",
                    "https://dotwize-jamelsyh.vercel.app",
