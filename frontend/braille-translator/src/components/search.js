@@ -28,7 +28,6 @@ function Search() {
 
   useEffect(() => {
     const getSearchData = async () => {
-      // const { data } = await axios.get('http://localhost:8000/contraction_list', {}, {
       const { data } = await axios.post(`${url}/contraction_list`, {}, {
         params: {
           lang: lang.code,
