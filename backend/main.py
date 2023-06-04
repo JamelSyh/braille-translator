@@ -6,9 +6,9 @@ from fastapi.middleware.cors import CORSMiddleware
 import requests
 import os
 
-# from dotenv import load_dotenv
+from dotenv import load_dotenv
 # Load environment variables from .env file
-# load_dotenv()
+load_dotenv()
 
 app = FastAPI()
 
