@@ -36,7 +36,7 @@ function Search() {
 
     const getSearchData = async () => {
       try {
-        const { data } = await axios.post(`${url}contraction_list/`, {}, {
+        const { data } = await axios.get(`${url}contraction_list/`, {
           params: {
             lang: lang.code,
             key: dotwise_api_key,
