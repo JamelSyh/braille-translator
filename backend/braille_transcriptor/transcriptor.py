@@ -1,7 +1,4 @@
 from braille_transcriptor.strategy_factory import StrategyFactoryConcrete
-from braille_transcriptor.language_strategy import Strategies
-
-strategies = Strategies
 
 
 class BrailleTranscriptor:

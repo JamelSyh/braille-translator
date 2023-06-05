@@ -31,7 +31,7 @@ function ConvertTranslate() {
   useEffect(() => {
     const getOptions = async () => {
       try {
-        const { data } = await axios.get(`${url}/translate_options`, {
+        const { data } = await axios.get(`${url}/translate_options/`, {
           params: {
             key: dotwise_api_key,
           }
@@ -59,7 +59,7 @@ function ConvertTranslate() {
   useEffect(() => {
     const Transcoding = async () => {
       try {
-        const { data } = await axios.post(`${url}/translator`, {}, {
+        const { data } = await axios.post(`${url}/translator/`, {}, {
           params: {
             text: debouncedText,
             source_lang: inTrans[0].code,

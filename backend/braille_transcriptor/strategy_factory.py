@@ -1,6 +1,5 @@
 from braille_transcriptor.language_strategy import Strategies
 from braille_transcriptor.braille_alphabets import Dictionary, transcript_options
-from fastapi import HTTPException
 
 strategies_dict = {
     "en": {"strate": Strategies.EglishStrategy, 'lang': "eng", 'dictionary': Dictionary.English.value},
@@ -40,18 +39,18 @@ class StrategyFactoryConcrete(StrategyFactory):
                 return strategy.value.grade1.to_braille(text)
             elif (int(target) == 2):
                 return strategy.value.grade2.to_braille(text)
-            else:
-                raise HTTPException(
-                    status_code=403, detail="enter a valid grade (1 or 2)")
+            # else:
+            #     raise HTTPException(
+            #         status_code=403, detail="enter a valid grade (1 or 2)")
         elif (self.grade_exist(source, target, transcript_options)):
             strategy = strategies_dict[target]['strate']
             if (int(source) == 1):
                 return strategy.value.grade1.from_braille(text)
             elif (int(source) == 2):
                 return strategy.value.grade2.from_braille(text)
-            else:
-                raise HTTPException(
-                    status_code=403, detail="enter a valid grade (1 or 2)")
-        else:
-            raise HTTPException(
-                status_code=403, detail="enter a valid language (en, ar, fr) or grade (1, 2)")
+            # else:
+            #     raise HTTPException(
+            #         status_code=403, detail="enter a valid grade (1 or 2)")
+        # else:
+        #     raise HTTPException(
+        #         status_code=403, detail="enter a valid language (en, ar, fr) or grade (1, 2)")

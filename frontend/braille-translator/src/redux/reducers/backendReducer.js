@@ -1,6 +1,6 @@
 
 
-const backendReducer = (state = { url: "https://api.dotwise.online", dotwiseApiKey: process.env.REACT_APP_DOTWISE_API_KEY, detectlangApiKey: process.env.REACT_APP_DETECTLANG_API_KEY, ocrApiKey: process.env.REACT_APP_OCR_API_KEY }, action) => {
+const backendReducer = (state = { url: "https://api.dotwise.online/api/", dotwiseApiKey: process.env.REACT_APP_DOTWISE_API_KEY, detectlangApiKey: process.env.REACT_APP_DETECTLANG_API_KEY, ocrApiKey: process.env.REACT_APP_OCR_API_KEY }, action) => {
   switch (action.type) {
     case "BACKEND_URL":
       return { ...state, url: action.payload.url };

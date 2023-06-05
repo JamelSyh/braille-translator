@@ -1,5 +1,4 @@
 from braille_transcriptor.strategies import english, french, arabic
-
 from enum import Enum
 
 

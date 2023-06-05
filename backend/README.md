@@ -8,27 +8,6 @@ This is a web service that allows you to transcribe text to and from Braille. It
 2. Create a virtual environment with `python -m venv venv`.
 3. Activate the virtual environment with `source venv/bin/activate` (on Linux/macOS) or `venv\Scripts\activate` (on Windows).
 4. Install the dependencies with `pip install -r requirements.txt`.
-5. Install the Tesseract OCR engine on your system. Instructions for different operating systems can be found [here](https://github.com/tesseract-ocr/tesseract).
-6. Download the language data files for the languages you need from the Tesseract language data repository. For example, to install French, Arabic, and English, download the following files:
-`ara.traineddata`
-`fra.traineddata`
-`eng.traineddata`
-Copy the downloaded language data files to the "tessdata" directory inside the Tesseract installation directory. For example, if you installed Tesseract to the default location, the tessdata directory would be located at "C:\Program Files\Tesseract-OCR\tessdata".
-
-#### Example
-
-- On Linux (ubuntu):
-  you can run `sudo apt install tesseract-ocr-fra tesseract-ocr-ara tesseract-ocr-eng`
-- On macOs
-  run `brew install tesseract-lang` and then `brew install tesseract-lang-fra tesseract-lang-ara tesseract-lang-eng` on macOS with Homebrew.
-- On Windows
-  1. install the language data files from the tessdata repo
-  2. Copy the downloaded language data files to the "tessdata" directory inside the Tesseract installation directory. For example, if you installed Tesseract to the default location, the tessdata directory would be located at "C:\Program Files\Tesseract-OCR\tessdata".
-
-7. Restart your terminal or command prompt to ensure that the changes to the PATH variable take effect.
-
-`for more info visit :` [here](https://github.com/tesseract-ocr/tesseract)
-
 
 
 ## Usage
