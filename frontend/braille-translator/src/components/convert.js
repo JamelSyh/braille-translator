@@ -82,7 +82,7 @@ function Convert() {
 
     const Transcoding = async () => {
       try {
-        const { data } = await axios.post(`${url}/transcriptor/`, {}, {
+        const { data } = await axios.post(`${url}transcriptor/`, {}, {
           params: {
             text: debouncedText,
             source: inLang.code,

@@ -16,7 +16,7 @@ function Search() {
   useEffect(() => {
     const getOptions = async () => {
       try {
-        const { data } = await axios.get(`${url}/search_options/`, {
+        const { data } = await axios.get(`${url}search_options/`, {
           params: {
             key: dotwise_api_key,
           },
@@ -36,7 +36,7 @@ function Search() {
 
     const getSearchData = async () => {
       try {
-        const { data } = await axios.post(`${url}/contraction_list/`, {}, {
+        const { data } = await axios.post(`${url}contraction_list/`, {}, {
           params: {
             lang: lang.code,
             key: dotwise_api_key,
