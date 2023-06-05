@@ -82,14 +82,13 @@ function Convert() {
 
     const Transcoding = async () => {
       try {
-        const { data } = await axios.post(`${url}transcriptor/`, {}, {
-          params: {
-            text: debouncedText,
-            source: inLang.code,
-            target: outLang.code,
-            key: dotwise_api_key,
-          }
-        });
+        const formData = new FormData();
+        formData.append('text', debouncedText);
+        formData.append('source', inLang.code);
+        formData.append('target', outLang.code);
+        formData.append('key', dotwise_api_key);
+
+        const { data } = await axios.post(`${url}transcriptor/`, formData);
         if (data) {
           if (debouncedText !== "" && data.result)
             dispatch(outputText(data.result));
@@ -97,7 +96,7 @@ function Convert() {
             dispatch(outputText(""));
         }
       } catch (error) {
-        console.error('Error transcribing :', error);
+        console.error('Error transcribing:', error);
       }
       dispatch(pending(false));
     };

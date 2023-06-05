@@ -109,7 +109,7 @@ def get_translate_options(request):
 
     # validate_api_key(key)
 
-    return Response(transcript_options)
+    return Response(translate_options)
 
 
 @api_view(['GET'])

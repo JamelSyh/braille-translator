@@ -59,29 +59,27 @@ function ConvertTranslate() {
   useEffect(() => {
     const Transcoding = async () => {
       try {
-        const { data } = await axios.post(`${url}translator/`, {}, {
-          params: {
-            text: debouncedText,
-            source_lang: inTrans[0].code,
-            source_grade: inTrans[0].grade.code,
-            target_lang: outTrans[0].code,
-            target_grade: outTrans[0].grade.code,
-            key: dotwise_api_key,
-          }
-        });
+        const formData = new FormData();
+        formData.append('text', debouncedText);
+        formData.append('source_lang', inTrans[0].code);
+        formData.append('source_grade', inTrans[0].grade.code);
+        formData.append('target_lang', outTrans[0].code);
+        formData.append('target_grade', outTrans[0].grade.code);
+        formData.append('key', dotwise_api_key);
+
+        const { data } = await axios.post(`${url}translator/`, formData);
         if (data) {
           if (debouncedText !== "" && data.result)
             dispatch(outputText(data.result));
           else
             dispatch(outputText(""));
-
         }
         if (debouncedText === "")
           dispatch(outputText(""));
 
         dispatch(pending(false));
       } catch (error) {
-        console.log("error at transalting: ", error);
+        console.log("Error at translating:", error);
       }
     };
     Transcoding();
